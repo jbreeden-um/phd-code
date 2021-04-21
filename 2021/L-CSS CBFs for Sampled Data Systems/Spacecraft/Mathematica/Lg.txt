@@ -1,0 +1,9 @@
+{(1/mu)abs[
+   sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + sx rz[t] wy[t] + 
+     sy rx[t] wz[t] - sx ry[t] wz[t]] (sz ry[t] - sy rz[t]), (1/mu)
+ abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+    sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sz rx[t] + 
+    sx rz[t]), (1/mu) 
+ abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+    sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sy rx[t] - 
+    sx ry[t])}

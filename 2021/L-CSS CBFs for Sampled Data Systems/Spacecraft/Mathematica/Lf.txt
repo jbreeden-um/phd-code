@@ -1,0 +1,10 @@
+(1/mu)((ry[t] wx[t] - rx[t] wy[t]) (mu sz + 
+     abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+        sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sy wx[t] + 
+         sx wy[t])) - (rz[t] wx[t] - rx[t] wz[t]) (mu sy + 
+     abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+        sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sz wx[t] - 
+        sx wz[t])) + (rz[t] wy[t] - ry[t] wz[t]) (mu sx + 
+     abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+        sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sz wy[t] + 
+         sy wz[t])))

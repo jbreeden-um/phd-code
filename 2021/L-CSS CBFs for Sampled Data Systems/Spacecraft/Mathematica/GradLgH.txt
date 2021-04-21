@@ -1,0 +1,81 @@
+{{(1/mu)(sz ry[t] - sy rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sz wy[t] + 
+     sy wz[t]), (1/
+  mu)(sz abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] + (sz ry[t] -
+        sy rz[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sz wx[t] - 
+       sx wz[t])), (1/
+  mu)(-sy abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - 
+       sx ry[t] wz[t]] + (-sz ry[t] + sy rz[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sy wx[t] - 
+       sx wy[t])), (1/
+  mu)(sz ry[t] - sy rz[t])^2 sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(-sz rx[t] + sx rz[t]) (sz ry[t] - sy rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(sy rx[t] - sx ry[t]) (sz ry[t] - sy rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]]}, {(1/
+  mu)(-sz abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] + (sz rx[t] -
+        sx rz[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sz wy[t] - 
+       sy wz[t])), (1/
+  mu)(-sz rx[t] + sx rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sz wx[t] - 
+     sx wz[t]), (1/
+  mu)(sx abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] + (sz rx[t] -
+        sx rz[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sy wx[t] - 
+       sx wy[t])), (1/
+  mu)(-sz rx[t] + sx rz[t]) (sz ry[t] - sy rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(sz rx[t] - sx rz[t])^2 sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(sy rx[t] - sx ry[t]) (-sz rx[t] + sx rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]]}, {(1/
+  mu)(sy abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] + (sy rx[t] -
+        sx ry[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sz wy[t] + 
+       sy wz[t])), (1/
+  mu)(-sx abs[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] + (sy rx[t] -
+        sx ry[t]) sign[
+      sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+       sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (sz wx[t] - 
+       sx wz[t])), (1/
+  mu)(sy rx[t] - sx ry[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]] (-sy wx[t] + 
+     sx wy[t]), (1/
+  mu)(sy rx[t] - sx ry[t]) (sz ry[t] - sy rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(sy rx[t] - sx ry[t]) (-sz rx[t] + sx rz[t]) sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]], (1/
+  mu)(sy rx[t] - sx ry[t])^2 sign[
+    sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+     sx rz[t] wy[t] + sy rx[t] wz[t] - sx ry[t] wz[t]]}}

@@ -1,0 +1,30 @@
+-sz (rz[t] (wx[t]^2 + wy[t]^2) + rx[t] (uy - wx[t] wz[t]) - 
+    ry[t] (ux + wy[t] wz[t])) + 
+ sy (rx[t] (uz + wx[t] wy[t]) + rz[t] (-ux + wy[t] wz[t]) - 
+    ry[t] (wx[t]^2 + wz[t]^2)) - 
+ sx (ry[t] (uz - wx[t] wy[t]) - rz[t] (uy + wx[t] wz[t]) + 
+    rx[t] (wy[t]^2 + wz[t]^2)) + (1/mu)
+ sign[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+    sx rz[t] wy[t] + sy rx[t] wz[t] - 
+    sx ry[t] wz[t]] (rz[
+      t] (sy ux - sx uy + 
+       sz (wx[t]^2 + wy[t]^2) - (sx wx[t] + sy wy[t]) wz[t]) + 
+    ry[t] (-sz ux + sx uz + sy wx[t]^2 - sx wx[t] wy[t] - 
+       sz wy[t] wz[t] + sy wz[t]^2) + 
+    rx[t] (sz uy - sy uz - wx[t] (sy wy[t] + sz wz[t]) + 
+       sx (wy[t]^2 + wz[t]^2)))^2 + (1/mu)
+ abs[sz ry[t] wx[t] - sy rz[t] wx[t] - sz rx[t] wy[t] + 
+    sx rz[t] wy[t] + sy rx[t] wz[t] - 
+    sx ry[t] wz[t]] (rx[
+      t] (sy uy wx[t] + sz uz wx[t] + 2 sy ux wy[t] - 3 sx uy wy[t] + 
+       sz wx[t]^2 wy[t] + 
+       sz wy[t]^3 - (-2 sz ux + 3 sx uz + sy (wx[t]^2 + wy[t]^2)) wz[
+         t] + sz wy[t] wz[t]^2 - sy wz[t]^3) + 
+    rz[t] (sy wx[t]^3 - sx wx[t]^2 wy[t] - 
+       sx wy[t]^3 + (sx ux + sy uy) wz[t] - 
+       wy[t] (3 sz uy - 2 sy uz + sx wz[t]^2) + 
+       wx[t] (-3 sz ux + 2 sx uz + sy (wy[t]^2 + wz[t]^2))) + 
+    ry[t] (-sz wx[t]^3 + (sx ux + sz uz) wy[t] + 
+       sx wx[t]^2 wz[t] + (2 sz uy - 3 sy uz + sx wy[t]^2) wz[t] + 
+       sx wz[t]^3 - 
+       wx[t] (3 sy ux - 2 sx uy + sz (wy[t]^2 + wz[t]^2))))
