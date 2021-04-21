@@ -1,0 +1,10 @@
+{(-Cos[phi[t]] (rx[t]^3 + 
+       sigma (ArcTan[-rx[t], -ry[t]] - phi[t]) ry[t] + 
+       rx[t] ry[t]^2) - (sigma (-ArcTan[-rx[t], -ry[t]] + phi[t]) rx[
+         t] + rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]])/((rx[t]^2 + 
+      ry[t]^2) Sqrt[
+    psi^2 sigma - sigma (ArcTan[-rx[t], -ry[t]] - phi[t])^2 + 
+     rx[t]^2 + ry[t]^2]), (
+ sigma (-ArcTan[-rx[t], -ry[t]] + phi[t]))/Sqrt[
+ psi^2 sigma - sigma (ArcTan[-rx[t], -ry[t]] - phi[t])^2 + rx[t]^2 + 
+  ry[t]^2]}

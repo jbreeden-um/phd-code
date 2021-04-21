@@ -1,0 +1,11 @@
+{-((2 rx[t] - (2 sigma (-ArcTan[rx[t], ry[t]] + phi[t]) ry[t])/(
+   rx[t]^2 + ry[t]^2))/(
+  2 Sqrt[-sigma (-(\[Pi]^2/4) + (-ArcTan[rx[t], ry[t]] + phi[t])^2) + 
+    rx[t]^2 + ry[t]^2])), -((
+  2 ry[t] + (2 sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t])/(
+   rx[t]^2 + ry[t]^2))/(
+  2 Sqrt[-sigma (-(\[Pi]^2/4) + (-ArcTan[rx[t], ry[t]] + phi[t])^2) + 
+    rx[t]^2 + ry[t]^2])), (
+ sigma (-ArcTan[rx[t], ry[t]] + 
+    phi[t]))/Sqrt[-sigma (-(\[Pi]^2/
+      4) + (-ArcTan[rx[t], ry[t]] + phi[t])^2) + rx[t]^2 + ry[t]^2]}

@@ -1,0 +1,17 @@
+(4 (v Cos[phi[t]] rx[t] + v ry[t] Sin[phi[t]] + (1/(
+      rx[t]^2 + ry[t]^2)) 
+      sigma (ArcTan[-rx[t], -ry[t]] - phi[t]) (v Cos[phi[t]] ry[t] + 
+         omega (rx[t]^2 + ry[t]^2) - v rx[t] Sin[phi[t]]))^2 - 
+   4 (psi^2 sigma - sigma (ArcTan[-rx[t], -ry[t]] - phi[t])^2 + 
+      rx[t]^2 + ry[t]^2) (v^2 Cos[phi[t]]^2 + 
+      omega v Cos[phi[t]] ry[t] - omega v rx[t] Sin[phi[t]] + 
+      v^2 Sin[phi[t]]^2 - (
+      sigma (v Cos[phi[t]] ry[t] + omega (rx[t]^2 + ry[t]^2) - 
+         v rx[t] Sin[phi[t]])^2)/(rx[t]^2 + ry[t]^2)^2 - (
+      1/((rx[t]^2 + ry[t]^2)^2)) 
+      sigma v (ArcTan[-rx[t], -ry[t]] - 
+         phi[t]) (2 v Cos[phi[t]] ry[t] + omega (rx[t]^2 + ry[t]^2) - 
+         2 v rx[t] Sin[phi[t]]) (Cos[phi[t]] rx[t] + 
+         ry[t] Sin[phi[t]])))/(4 (psi^2 sigma - 
+     sigma (ArcTan[-rx[t], -ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+   3/2))

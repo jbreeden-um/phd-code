@@ -1,0 +1,77 @@
+{{(-4 rx[t] (psi^2 sigma - sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + 
+        rx[t]^2 + 
+        ry[t]^2) (-Cos[phi[t]] (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[
+             t]^2) - (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]]) - 
+     2 (rx[t]^3 + sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+        rx[t] ry[
+          t]^2) (-Cos[phi[t]] (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[
+             t]^2) - (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]]) + 
+     2 (psi^2 sigma - sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + 
+        rx[t]^2 + 
+        ry[t]^2) (-Cos[
+           phi[t]] (3 rx[t]^4 - (sigma - 4 rx[t]^2) ry[t]^2 + 
+           ry[t]^4) - (sigma rx[t] ry[t] - 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) (rx[t]^2 + 
+              ry[t]^2) + 2 rx[t] ry[t] (rx[t]^2 + ry[t]^2)) Sin[
+          phi[t]]))/(2 (rx[t]^2 + ry[t]^2)^2 (psi^2 sigma - 
+       sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+     3/2)), (-4 ry[
+       t] (psi^2 sigma - sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + 
+        rx[t]^2 + 
+        ry[t]^2) (-Cos[phi[t]] (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[
+             t]^2) - (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]]) - 
+     2 (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + rx[t]^2 ry[t] +
+         ry[t]^3) (-Cos[phi[t]] (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[
+             t]^2) - (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]]) + 
+     2 (psi^2 sigma - sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + 
+        rx[t]^2 + 
+        ry[t]^2) (-Cos[phi[t]] (sigma rx[t] ry[t] + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) (rx[t]^2 + 
+              ry[t]^2) + 
+           2 rx[t] ry[t] (rx[t]^2 + ry[t]^2)) + (-rx[t]^4 - 
+           3 ry[t]^4 + rx[t]^2 (sigma - 4 ry[t]^2)) Sin[
+          phi[t]]))/(2 (rx[t]^2 + ry[t]^2)^2 (psi^2 sigma - 
+       sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+     3/2)), ((psi^2 sigma - sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + 
+        rx[t]^2 + ry[t]^2) (sigma Cos[phi[t]] ry[t] - 
+        Cos[phi[t]] (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) - 
+        sigma rx[t] Sin[
+          phi[t]] + (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[t]^2) Sin[phi[t]]) - 
+     sigma (ArcTan[rx[t], ry[t]] - 
+        phi[t]) (-Cos[phi[t]] (rx[t]^3 + 
+           sigma (ArcTan[rx[t], ry[t]] - phi[t]) ry[t] + 
+           rx[t] ry[
+             t]^2) - (sigma (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t] + 
+           rx[t]^2 ry[t] + ry[t]^3) Sin[phi[t]]))/((rx[t]^2 + 
+       ry[t]^2) (psi^2 sigma - 
+       sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+     3/2))}, {(
+  sigma (psi^2 sigma ry[
+       t] + ((ArcTan[rx[t], ry[t]] - phi[t]) rx[t] + ry[t]) (rx[t]^2 +
+         ry[t]^2)))/((rx[t]^2 + ry[t]^2) (psi^2 sigma - 
+     sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+   3/2)), -((sigma (rx[
+          t]^3 + (-ArcTan[rx[t], ry[t]] + phi[t]) rx[t]^2 ry[
+           t] + (-ArcTan[rx[t], ry[t]] + phi[t]) ry[t]^3 + 
+         rx[t] (psi^2 sigma + ry[t]^2)))/((rx[t]^2 + 
+         ry[t]^2) (psi^2 sigma - 
+         sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + 
+         ry[t]^2)^(3/2))), (
+  sigma (psi^2 sigma + rx[t]^2 + ry[t]^2))/(psi^2 sigma - 
+    sigma (ArcTan[rx[t], ry[t]] - phi[t])^2 + rx[t]^2 + ry[t]^2)^(
+  3/2)}}
