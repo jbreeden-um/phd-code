@@ -21,8 +21,9 @@ catch
     global case = :Flyby
         # global cbf = :Constant
         # global cbf = :Variable
-        global cbf = :Integrated
+        # global cbf = :Integrated
         # global cbf = :Orbital
+        global cbf = :NewAlpha
         # global cbf = :NoSwitch
 end
 
@@ -62,6 +63,10 @@ if case==:Flyby
     w_umax = 5e-6;
     w_xmax = 2e-6;
 
+    epsilon1 = 5e4;
+    epsilon2 = 3*epsilon1;
+    v_target = [NaN;0.0;0.0];
+
     Constraints.set_mu_phi(Gravity.mu_Ceres);
     if cbf==:Constant
         Constraint_func = Constraints.H_two_norm;
@@ -72,6 +77,15 @@ if case==:Flyby
         rTol = 1e-5;
         aTol = 1e-4;
         Controllers.set_using_switching(true);
+    elseif cbf==:NewAlpha
+        Constraint_func = Constraints.H_two_norm;
+        r_min = sqrt(Gravity.mu_Ceres/(0.5*(u_max-w_umax)));
+        Constraints.set_rho(r_min);
+        Constraints.set_a_max(0.5*u_max - 0.5*w_umax - w_xmax);
+        rTol = 1e-5;
+        aTol = 1e-4;
+        Controllers.set_using_switching(false);
+        Controllers.set_slope(x->x/epsilon1);
     elseif cbf==:NoSwitch
         Constraint_func = Constraints.H_two_norm;
         r_min = sqrt(Gravity.mu_Ceres/(0.5*(u_max-w_umax)));
@@ -80,9 +94,9 @@ if case==:Flyby
         rTol = 1e-5;
         aTol = 1e-4;
         Controllers.set_using_switching(false);
-        # Controllers.set_slope(1.90e-4); # average during the nominal simulation
-        Controllers.set_slope(3.42e-5); # average during the nominal simulation when sigma was active
-        # Controllers.set_slope(1e-4); # largest slope I've tested that does not fail due to numerical tolerances, though the control input is bad
+        # Controllers.set_slope(x->1.90e-4); # average during the nominal simulation
+        Controllers.set_slope(x->3.42e-5); # average during the nominal simulation when sigma was active
+        # Controllers.set_slope(x->1e-4); # largest slope I've tested that does not fail due to numerical tolerances, though the control input is bad
     elseif cbf==:Variable
         Constraint_func = Constraints.H_variable;
         r_min = 1.25*sqrt(Gravity.mu_Ceres/(u_max - w_umax)) # to ensure Phi does not become positive
@@ -115,10 +129,6 @@ if case==:Flyby
     else
         error("Unknown CBF method")
     end
-
-    epsilon1 = 5e4;
-    epsilon2 = 3*epsilon1;
-    v_target = [NaN;0.0;0.0];
     
     Constraints.set_w_xmax(w_xmax);
     Constraints.set_w_umax(w_umax);
@@ -251,6 +261,8 @@ elseif case==:Eros
     sol = DifferentialEquations.solve(problem, reltol=1e-5, isoutofdomain=DomainLimiter, dtmin=1e-10, callback=CallbackSet(saving,stopping));
 end
 
+Switching.end_sim(); # this closes the Switching.txt file so it can be overwritten by save_control_data()
+
 function extract_dimension(data, d)
     return data[d];
 end
@@ -296,6 +308,7 @@ function save_control_data(filename)
         @printf(file, "%.8f %.8f %.8f\n", u[1], u[2], u[3]) # real control inputs instead of "last control inputs"
     end
     close(file);
+    Switching.end_sim();
 end
 
 save_data("Sim.txt");

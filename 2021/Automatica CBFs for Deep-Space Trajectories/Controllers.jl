@@ -32,7 +32,7 @@ last_residual = NaN;
 
 epsilon1 = NaN;
 epsilon2 = NaN;
-slope = NaN;
+slope = nothing;
 function set_epsilon1(x); global epsilon1 = x; end
 function set_epsilon2(x); global epsilon2 = x; end
 function set_slope(x); global slope = x; end
@@ -45,7 +45,7 @@ function alpha(lambda, W=NaN)
         global last_residual = W/epsilon1;
         return W*lambda/epsilon1;
     else
-        return slope*lambda;
+        return slope(W)*lambda;
     end
 end
 
@@ -169,6 +169,9 @@ time_start_sliding = [];
 time_end_sliding = [];
 sliding = [];
 
+filename = "Switching.txt";
+file = nothing;
+
 max_count = 0;
 
 function switching_func(t,H,epsilon1,epsilon2)
@@ -176,6 +179,7 @@ function switching_func(t,H,epsilon1,epsilon2)
         global time_start_sliding = -2*ones(length(H));
         global time_end_sliding = -1*ones(length(H));
         global sliding = Bool.(ones(length(H)));
+        global file = open(filename, "w+");
     end
     count = 0;
     for i=1:length(H)
@@ -208,10 +212,17 @@ function switching_func(t,H,epsilon1,epsilon2)
             end
         end
     end
+    str = string(sliding);
+    println(file, str[6:end-1]);
     global max_count = max(count, max_count)
     # println(max_count);
     return sliding;
 end
+
+function end_sim()
+    close(file);
+end
+
 
 end
 
