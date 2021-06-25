@@ -167,16 +167,21 @@ set(gca, 'YTick', [1e5 1e6 1e7 1e8 1e9], 'FontSize', 11)
 
 %%
 data5 = load('Results/SimConstantNoSwitch.txt');
+data6 = load('Results/SimConstantNewAlpha.txt');
 t5 = data5(:,1)/day; H5 = data5(:,8);
+t6 = data6(:,1)/day; H6 = data6(:,8);
 color5 = [0;0;0];
+color6 = [0;0.5;1];
 figure(7); clf;
 semilogy(t1, H1, 'Color', color2); hold on;
+semilogy(t6, H6, 'Color', color6);
 semilogy(t5, H5, 'Color', color5);
 xlabel 'Time (days)';
 ylabel 'H (m)';
-legend 'Switched' 'Always Active' Location NorthEast Interpreter latex
+legend 'Switched, $\alpha=\alpha_r$' 'No Switching, $\alpha=\alpha_r$' ...
+    'No Switching, $\alpha=\alpha_c$' Location NorthWest Interpreter latex
 set(gcf, 'Position', [1850 800 560 200]);
-axis([0 te -1e9 -1e-4])
+axis([0 25 -1e9 -1e-4])
 set(gca, 'FontSize', 11)
 l = legend;
 set(l, 'FontSize', 13, 'Interpreter', 'latex');
