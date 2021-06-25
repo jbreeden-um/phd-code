@@ -44,17 +44,37 @@ set(gcf, 'Position', [1800 100 800 600])
 set(gca, 'FontSize', 11); 
 
 figure(3); clf;
-plot(t,u);
+plot(t,u(:,1));
 xlabel 'Time (s)';
-ylabel 'Control Input (m/s^2)';
+ylabel 'u_x (m/s^2)';
 hold on;
 plot([t(1), t(end)], [0.1 0.1], 'r--');
 plot([t(1), t(end)], [-0.1 -0.1], 'r--');
 axis([0 6000 -0.105 0.105])
-legend 'u_x' 'u_y' 'u_z';
-set(gcf, 'Position', [1850 600 560 200]);
+set(gcf, 'Position', [2650 900 560 160]);
 set(gca, 'FontSize', 11); 
-l = legend; set(l, 'Orientation', 'horizontal');
+
+figure(4); clf;
+plot(t,u(:,2));
+xlabel 'Time (s)';
+ylabel 'u_y (m/s^2)';
+hold on;
+plot([t(1), t(end)], [0.1 0.1], 'r--');
+plot([t(1), t(end)], [-0.1 -0.1], 'r--');
+axis([0 6000 -0.105 0.105])
+set(gcf, 'Position', [2650 600 560 160]);
+set(gca, 'FontSize', 11); 
+
+figure(5); clf;
+plot(t,u(:,3));
+xlabel 'Time (s)';
+ylabel 'u_z (m/s^2)';
+hold on;
+plot([t(1), t(end)], [0.1 0.1], 'r--');
+plot([t(1), t(end)], [-0.1 -0.1], 'r--');
+axis([0 6000 -0.105 0.105])
+set(gcf, 'Position', [2650 300 560 160]);
+set(gca, 'FontSize', 11); 
 
 return
 %%
@@ -72,6 +92,10 @@ set(gcf, 'color', 'k')
 axis off
 plotSC = plot3(r(1,1)/1e3, r(1,2)/1e3, r(1,3)/1e3,'ko','MarkerFaceColor',[.6;.6;1],'MarkerSize',10);
 
+switches = logical(load('Results/SwitchingEros.txt'));
+% splot = plot3(NaN, NaN, NaN, 'w.', 'MarkerSize', 35);
+splot = plot3(NaN, NaN, NaN, 'ks', 'MarkerSize', 12, 'MarkerFaceColor', 'w');
+
 record = 1;
 video_duration = 60;
 frame_rate = 30;
@@ -88,6 +112,12 @@ for i=1:nframes
     vertices = Eros.vertices*rot';
     set(plotEros, 'Vertices', vertices);
     set(plotSC, 'XData', rframe(1), 'YData', rframe(2), 'ZData', rframe(3));
+    [~,index] = min(abs(t - tframe));
+    if t(index) >= tframe && index ~= 1, index = index - 1; end
+    active = switches(index,:) & switches(index+1,:);
+    set(splot, 'XData', vertices(active',1)*1.02, ...
+               'YData', vertices(active',2)*1.02, ...
+               'ZData', vertices(active',3)*1.02);
     drawnow;
     
     if record
