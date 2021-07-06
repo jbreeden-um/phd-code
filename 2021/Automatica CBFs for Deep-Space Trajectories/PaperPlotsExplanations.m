@@ -27,7 +27,7 @@ xlabel('$h(t,x)$', 'interpreter', 'latex', 'FontSize', 13);
 ylabel('$\dot{h}(t,x)$', 'interpreter', 'latex', 'FontSize', 13);
 legend([s_h, s_com],{'$\partial S_H$', '$S_H^\textrm{com}$'},'interpreter','latex','location','northeast','fontsize',13);
 text(-0.6,-0.03,0.1,'$S_H^\textrm{res}$','interpreter','latex','fontsize',15);
-text(0.03,-0.87,0.2,'$S_H^\textrm{bad}$','interpreter','latex','fontsize',15);
+text(0.03,-0.87,0.2,'$S_H^\textrm{unsafe}$','interpreter','latex','fontsize',15);
 text(0.35,-0.03,1,'$\mathbf{R}^n \setminus S_H$','interpreter','latex','fontsize',15);
 
 %% Explanation of the various maximizers
