@@ -10,4 +10,4 @@ In [aa_RunSim.m](Sphere/aa_RunSim.m), select between case 1, 2, or 3, which corr
 
 ### Asteroid
 
-Simply run [aa_RunSim.m]](Asteroid/aa_RunSim.m) to view this experiment. Note that on your first run, the script will generate a file that's used to compute the "nominal path" around the asteroid. This file is too big to share via git, so it is saved during the first run. Once the simulation is running, rotate the figure that appears until you can see the trajectory.
+Simply run [aa_RunSim.m](Asteroid/aa_RunSim.m) to view this experiment. Note that on your first run, the script will generate a file that's used to compute the "nominal path" around the asteroid. This file is too big to share via git, so it is saved during the first run. Once the simulation is running, rotate the figure that appears until you can see the trajectory.
