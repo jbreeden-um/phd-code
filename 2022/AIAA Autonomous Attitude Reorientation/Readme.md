@@ -1,0 +1,3 @@
+## Autonomous Spacecraft Attitude Reorientation Using Robust Sampled-Data Control Barrier Functions
+
+This folder contains code for a paper currently under review. For this paper, three sets of simulations were run. The first two sets of simulations were in MATLAB, and can be executed by running [aa_RunSim.m](MATLAB/aa_RunSim.m) with the appropriate parameters. The third set of simulations was run in an external simulator. While these simulations will not run as is without also installing the [simulation engine](https://github.com/ericstoneking/42), the [42](42) folder contains all the input and output files and everything else needed to reproduce our results. For more information, see the paper.

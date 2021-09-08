@@ -1,0 +1,34 @@
+/*                 Note: FOV Boresight is +Z Axis                 */
+************************* Fields of View ***************************
+3                                  !  Number of FOVs
+--------------------------------------------------------------------
+"Tracker / Sun"                            !  Label
+20   0.15                          !  Number of Sides, Length [m]
+90.0  90.0                         !  X Width, Y Height [deg]
+1.0 1.0 0.0 0.5                    !  Color RGB+Alpha
+SOLID                              !  WIREFRAME, SOLID, VECTOR, or PLANE 
+TRUE  FALSE                         !  Draw Near Field, Draw Far Field
+0  0                               !  SC, Body 
+0.043  0.024  0.06              !  Position in Body [m]
+90.0  10.0  0.0  123                 !  Euler Angles [deg], Sequence
+--------------------------------------------------------------------
+"Instrument / Sun"                            !  Label
+20   0.15                            !  Number of Sides, Length [m]
+50.0  50.0                           !  X Width, Y Height [deg]
+1.0 1.0 0.0 0.5                    !  Color RGB+Alpha
+SOLID                              !  WIREFRAME, SOLID, VECTOR, or PLANE 
+TRUE  FALSE                         !  Draw Near Field, Draw Far Field
+0  0                               !  SC, Body 
+0.05  0.18  0.322                       !  Position in Body [m]
+0.0  0.0  0.0  321                 !  Euler Angles [deg], Sequence
+--------------------------------------------------------------------
+"Tracker / Earth"                            !  Label
+20   0.18                          !  Number of Sides, Length [m]
+60.0  60.0                         !  X Width, Y Height [deg]
+0.5 0.5 1.0 0.5                    !  Color RGB+Alpha
+SOLID                              !  WIREFRAME, SOLID, VECTOR, or PLANE 
+TRUE  FALSE                         !  Draw Near Field, Draw Far Field
+0  0                               !  SC, Body 
+0.043  0.024  0.06              !  Position in Body [m]
+90.0  10.0  0.0  123                 !  Euler Angles [deg], Sequence
+--------------------------------------------------------------------

@@ -1,0 +1,11 @@
+<<<<<<<<<<<<<<<<<  42:  Command Script File  >>>>>>>>>>>>>>>>>
+0.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at MERCURY
+240.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at VENUS
+480.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at EARTH
+720.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at LUNA
+960.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at MARS
+1200.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at JUPITER
+1440.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at SATURN
+1680.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at URANUS
+1920.0 Point SC[0].B[0] Primary Vector [0.0 0.0 1.0] at NEPTUNE
+EOF
