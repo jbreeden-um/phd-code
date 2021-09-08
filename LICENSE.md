@@ -22,4 +22,6 @@ SOFTWARE.
 
 This license is for the Software contained within this repository only, and 
 does not apply to the papers on which this Software is based. These papers 
-belong to their respective copyright holders.
+belong to their respective copyright holders. Additionally, where results
+depend on the use of external software, all external software is subject to
+its respective copyrights.
