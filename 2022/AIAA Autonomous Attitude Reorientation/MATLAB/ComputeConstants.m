@@ -153,7 +153,7 @@ M3 = max(M3plus, abs(M3minus));
 
 %% Comparison to naive overshoot approach
 % Second derivative of H with no noise
-muC = 0.00172;
+muC = 0.00167;
 func = @(x) ( rphi(x(1)*year, [x(2:7); x(11:14)*1e3], x(15:18)) ...
     + rphi(x(1)*year, [x(2:7); x(11:14)*1e3], x(15:18))^2*sign(rhdot(x(1)*year, x(2:7)))/muC ...
     + abs(rhdot(x(1)*year, x(2:7)))*rphidot(x(1)*year, [x(2:7); x(11:14)*1e3], x(15:18), [0;0;0])/muC );
@@ -171,7 +171,28 @@ end
 min_val
 if ~isempty(min_res), nonlcon(min_res), end
 
-Hddot_min = -0.536;
+Hddot_min = -0.5504;
+Delta = Hddot_min*dt^2/8;
+
+%%
+% Second derivative of h with no noise
+u_guess = @(x) sign(s_func(x(1)*year)'*skew(x(2:4))*Z(1:3,4:7))'*wheel_limit; % control law that most decrease h
+lower = -[0; ones(3,1); w_max*ones(3,1)*3; wheel_rate_limit*ones(4,1)/1e3];
+upper =  [1; ones(3,1); w_max*ones(3,1)*3; wheel_rate_limit*ones(4,1)/1e3];
+func = @(x) rphi(x(1)*year, [x(2:7); x(8:11)*1e3], u_guess(x))*1e6;
+N = 100;
+min_val = 0;
+min_res = [];
+for i=1:min(N, N_max)
+guess = randn(11,1).*upper;
+[res, fval] = fmincon(func, guess, [], [], [], [], lower, upper, nonlcon);
+min_val = min(min_val, fval); if min_val == fval, min_res = res; end
+end
+min_val = min_val / 1e6
+if ~isempty(min_res), nonlcon(min_res), end
+
+hddot_min = -0.0262;
+Delta = hddot_min*dt^2/8;
 
 %%
 % Third Derivative of h with no noise
@@ -188,6 +209,8 @@ min_val
 if ~isempty(min_res), nonlcon(min_res), end
 
 hdddot_min = -0.0062; % the disturbance has a negligible effect on this constant, unlike M2plus/M2minus
+hddot_eff = muC - hdddot_min*dt;
+Delta = hddot_eff*dt^2/8;
 
 %% Comparison to continuous time
 muC = 0.0025;
@@ -266,7 +289,7 @@ end
 end
 min_val = min_val/1e6
 
-Delta3 = 1.10e-5;
+Delta3 = 1.09e-5;
 
 %% Fast Method for checking Delta_2, delta_2
 % delta_2 = 0.97e-5; % This is an asymmetric case that works, but provides minimal benefit
