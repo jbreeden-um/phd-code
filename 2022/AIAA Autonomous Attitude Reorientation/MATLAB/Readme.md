@@ -1,6 +1,6 @@
 ## Simulations in MATLAB
 
-To run these simulations, run [aa_RunSim.m](aa_RunSim.m). Feel free to change the parameters `use_cbf`, `use_lyapunov`, or `nonconvex_demo` to access the various simulation cases, or anything other parameters that strike you as interesting.
+To run these simulations, run [aa_RunSim.m](aa_RunSim.m). Feel free to change the parameters `use_cbf`, `use_lyapunov`, or `nonconvex_demo` to access the various simulation cases, or any other parameters that strike you as interesting.
 
 Simulation cases:
 * Simple Reorientation
