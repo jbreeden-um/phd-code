@@ -34,33 +34,6 @@ set(f, 'Position', [2200 800 560 180]);
 axis([0 8 -5 2.5]);
 legend({'OPCBF', 'ECBF', 'MPC'},'Location','SouthEast','FontSize',12);
 
-%% Control Input Plots
-f = figure(2); clf;
-plot(data1.t(1:end-1), data1.u(1,:), 'b', 'LineWidth', 1.5); hold on;
-plot(data2.t(1:end-1), data2.u(1,:), 'g', 'LineWidth', 1.5);
-plot(data3.t(1:end-1), data3.u(1,:), 'r', 'LineWidth', 1.5);
-plot(data1.t(1:end-1), data1.u(2,:), 'b--', 'LineWidth', 1.5);
-plot(data2.t(1:end-1), data2.u(2,:), 'g--', 'LineWidth', 1.5);
-plot(data3.t(1:end-1), data3.u(2,:), 'r--', 'LineWidth', 1.5);
-xlabel 'Time (s)';
-ylabel 'u (m/s^2)';
-set(f, 'Position', [2200 1100 560 180]);
-axis([0 8 -5 2.5]);
-legend({'OPCBF', 'ECBF', 'MPC'},'Location','SouthEast','FontSize',12);
-
-f = figure(3); clf;
-plot(data4.t(1:end-1), data4.u(1,:), 'b', 'LineWidth', 1.5); hold on;
-plot(data5.t(1:end-1), data5.u(1,:), 'g', 'LineWidth', 1.5);
-plot(data6.t(1:end-1), data6.u(1,:), 'r', 'LineWidth', 1.5);
-plot(data4.t(1:end-1), data4.u(2,:), 'b--', 'LineWidth', 1.5);
-plot(data5.t(1:end-1), data5.u(2,:), 'g--', 'LineWidth', 1.5);
-plot(data6.t(1:end-1), data6.u(2,:), 'r--', 'LineWidth', 1.5);
-xlabel 'Time (s)';
-ylabel 'u (m/s^2)';
-set(f, 'Position', [2200 800 560 180]);
-axis([0 8 -5 2.5]);
-legend({'OPCBF', 'ECBF', 'MPC'},'Location','SouthEast','FontSize',12);
-
 %% Constraint Plots
 f = figure(4); clf;
 plot(data1.t(1:end-1), data1.h, 'b', 'LineWidth', 1.5); hold on;
