@@ -11,7 +11,9 @@ xlabel 'Time (s)';
 ylabel '||u|| (m/s^2)';
 axis([0 2500 -4 55]);
 set(f, 'Position', [2200 1100 560 180]);
-legend({'OPCBF', 'ECBF'},'Location','NorthWest','FontSize',12);
+legend({'PCBF', 'ECBF'},'Location','NorthWest','FontSize',12);
+u_tot = [trapz(data1.t(1:end-1), vecnorm(data1.u)*1e3), trapz(data2.t(1:end-1), vecnorm(data2.u)*1e3)];
+disp([num2str(u_tot) ' m/s'])
 
 %% Constraint Plots
 f = figure(3); clf;
@@ -22,4 +24,4 @@ xlabel 'Time (s)';
 ylabel 'h (km)';
 set(f, 'Position', [2200 800 560 180]);
 axis([0 2500 -14e3 1e3]);
-legend([p1 p2 p3],{'OPCBF', 'ECBF', 'None'},'Location','NorthWest','FontSize',12);
+legend([p1 p2 p3],{'PCBF', 'ECBF', 'None'},'Location','NorthWest','FontSize',12);
