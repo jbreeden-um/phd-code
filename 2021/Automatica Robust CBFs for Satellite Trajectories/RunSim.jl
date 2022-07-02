@@ -23,8 +23,9 @@ catch
         # global cbf = :Variable
         # global cbf = :Integrated
         # global cbf = :Orbital
-        global cbf = :NewAlpha
+        # global cbf = :NewAlpha
         # global cbf = :NoSwitch
+        global cbf = :None
 end
 
 # The reader is welcome to test this code with different parameters, settings, tolerances, etc.
@@ -126,6 +127,11 @@ if case==:Flyby
         rTol = 1e-6;
         aTol = 1e-5;
         Controllers.set_using_switching(true);
+    elseif cbf==:None
+        Constraint_func = (t,x)->(-1, [], []);
+        rTol = 1e-5;
+        aTol = 1e-4;
+        Controllers.set_using_switching(true);
     else
         error("Unknown CBF method")
     end
@@ -150,7 +156,12 @@ if case==:Flyby
     Controllers.set_epsilon1(epsilon1);
     Controllers.set_epsilon2(epsilon2);
 
-    xdot_params = [(t,x)->Controllers.CalculateU(t,x,Constraint_func,case,(s,y)->Switching.switching_func(s,y,epsilon1,epsilon2));
+    if cbf==:None
+        switch_func = (s,y)->false
+    else
+        switch_func = (s,y)->Switching.switching_func(s,y,epsilon1,epsilon2)
+    end
+    xdot_params = [(t,x)->Controllers.CalculateU(t,x,Constraint_func,case,switch_func);
         Gravity.gravity_Ceres;
         Disturbances.Matched;
         Disturbances.Unmatched];
@@ -261,7 +272,9 @@ elseif case==:Eros
     sol = DifferentialEquations.solve(problem, reltol=1e-5, isoutofdomain=DomainLimiter, dtmin=1e-10, callback=CallbackSet(saving,stopping));
 end
 
-Switching.end_sim(); # this closes the Switching.txt file so it can be overwritten by save_control_data()
+if cbf != :None
+    Switching.end_sim(); # this closes the Switching.txt file so it can be overwritten by save_control_data()
+end
 
 function extract_dimension(data, d)
     return data[d];
@@ -308,7 +321,9 @@ function save_control_data(filename)
         @printf(file, "%.8f %.8f %.8f\n", u[1], u[2], u[3]) # real control inputs instead of "last control inputs"
     end
     close(file);
-    Switching.end_sim();
+    if cbf != :None
+        Switching.end_sim();
+    end
 end
 
 save_data("Sim.txt");

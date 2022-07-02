@@ -2,41 +2,50 @@ data1 = load('Results/SimConstant.txt');
 data2 = load('Results/SimVariable.txt');
 data3 = load('Results/SimIntegrated2S.txt');
 data4 = load('Results/SimIntegrated3S.txt');
+data5 = load('Results/SimNone.txt');
 
 control1 = load('Results/ControlConstant.txt');
 control2 = load('Results/ControlVariable.txt');
 control3 = load('Results/ControlIntegrated2S.txt');
 control4 = load('Results/ControlIntegrated3S.txt');
+control5 = load('Results/ControlNone.txt');
 
-t1 = data1(:,1);      t2 = data2(:,1);      t3 = data3(:,1);      t4 = data4(:,1);
-r1 = data1(:,2:4);    r2 = data2(:,2:4);    r3 = data3(:,2:4);    r4 = data4(:,2:4);
-v1 = data1(:,5:7);    v2 = data2(:,5:7);    v3 = data3(:,5:7);    v4 = data4(:,5:7);
+t1 = data1(:,1);      t2 = data2(:,1);      t3 = data3(:,1);      t4 = data4(:,1);      t5 = data5(:,1);
+r1 = data1(:,2:4);    r2 = data2(:,2:4);    r3 = data3(:,2:4);    r4 = data4(:,2:4);    r5 = data5(:,2:4);
+v1 = data1(:,5:7);    v2 = data2(:,5:7);    v3 = data3(:,5:7);    v4 = data4(:,5:7);    v5 = data5(:,5:7);
 % H1 = data1(:,8);      H2 = data2(:,8);      H3 = data3(:,8);      H4 = data4(:,8);
 H1 = control1(:,2);   H2 = control2(:,2);   H3 = control3(:,2);   H4 = control4(:,2);
 % u1 = data1(:,9:11);   u2 = data2(:,9:11);   u3 = data3(:,9:11);   u4 = data4(:,9:11);
-u1 = control1(:,3:5); u2 = control2(:,3:5); u3 = control3(:,3:5); u4 = control4(:,3:5);
+u1 = control1(:,3:5); u2 = control2(:,3:5); u3 = control3(:,3:5); u4 = control4(:,3:5); u5 = control5(:,3:5);
 sigma1 = data1(:,12); sigma2 = data2(:,12); sigma3 = data3(:,12); sigma4 = data4(:,12);
                                             beta3 = data3(:,13);  beta4 = data3(:,13);
-
+                                            
 color1 = [0;0;1];
 color2 = [0;1;0];
 color3 = [1;0;0];
 color4 = [1;0;1];
 
 day = 24*3600;
-t1 = t1/day; t2 = t2/day; t3 = t3/day; t4 = t4/day;
+t1 = t1/day; t2 = t2/day; t3 = t3/day; t4 = t4/day; t5 = t5/day;
 te = 6e6/day;
-u1 = u1*1e3; u2 = u2*1e3; u3 = u3*1e3; u4 = u4*1e3;
+u1 = u1*1e3; u2 = u2*1e3; u3 = u3*1e3; u4 = u4*1e3; u5 = u5*1e3;
+
+r_Ceres = 476000; 
+r = vecnorm(r5,2,2);
+x = r < r_Ceres;
+[~,i] = max(x);
+x(i:end) = 1;
+r5(x,:) = NaN;
 
 %%
 figure(1); clf;
 [s1, s2, s3] = sphere(20);
-r_Ceres = 476000; 
 hold on;
 p1 = plot3(r1(:,1)/1e6, r1(:,2)/1e6, r1(:,3)/1e6, 'LineWidth', 2, 'Color', color1);
 p2 = plot3(r2(:,1)/1e6, r2(:,2)/1e6, r2(:,3)/1e6, 'LineWidth', 2, 'Color', color2);
 p3 = plot3(r3(:,1)/1e6, r3(:,2)/1e6, r3(:,3)/1e6, 'LineWidth', 2, 'Color', color3);
 p4 = plot3(r4(:,1)/1e6, r4(:,2)/1e6, r4(:,3)/1e6, 'LineWidth', 2, 'Color', color4);
+p5 = plot3(r5(:,1)/1e6, r5(:,2)/1e6, r5(:,3)/1e6, 'LineWidth', 2, 'Color', [0.4 0.4 0.4]);
 xlabel 'X (Mm)';
 ylabel 'Y (Mm)';
 zlabel 'Z (Mm)';
@@ -45,14 +54,16 @@ axis equal;
 set(gcf, 'Position', [1700 800 600 500])
 axis([-5.5e7 5.5e7 -5e7 5e7 -2e7 2e7]/1e6);
 view([0;0;1])
-legend([p1,p2,p3,p4],{'Case $H^A_1$','Case $H^A_2$','Case $H^A_3$','Case $H^A_4$'},'Location','East','Interpreter','latex','FontSize',14)
-grid on;
+legend([p1,p2,p3,p4,p5],{'Case $H^A_1$','Case $H^A_2$','Case $H^A_3$','Case $H^A_4$','No CBF'},...
+    'Location','East','Interpreter','latex','FontSize',14)
+grid on;return
 
 %%
 surf(s1*r_Ceres/1e6, s2*r_Ceres/1e6, s3*r_Ceres/1e6, 'FaceColor', [0.7;0.7;0.7], 'FaceAlpha', 1);
 axis([-1.5 1.5 -1.5 1.5 -1.5 1.5]);
 set(gca,'FontSize',12)
-legend([p4],{'Case $H^A_4$'},'Location','SouthEast','Interpreter','latex','FontSize',18)
+legend([p4 p5],{'Case $H^A_4$','No CBF'},'Location','SouthEast','Interpreter','latex','FontSize',18)
+
 
 %%
 figure(2); clf;
@@ -158,7 +169,7 @@ p2 = semilogy(t2, -r_Ceres + vecnorm(r2,2,2), 'Color', color2);
 p3 = semilogy(t3, -r_Ceres + vecnorm(r3,2,2), 'Color', color3);
 p4 = semilogy(t4, -r_Ceres + vecnorm(r4,2,2), 'Color', color4);
 xlabel 'Time (days)';
-ylabel 'Altitude Above Ceres (m)';
+ylabel 'Altitude Above Ceres (m)     ';
 legend([p1,p2,p3,p4],{'Case $H_1$', 'Case $H_2$', 'Case $H_3$', 'Case $H_4$'},...
     'Location', 'SouthEast' ,'Interpreter', 'latex', 'FontSize', 13)
 set(gcf, 'Position', [1850 200 560 200]);
