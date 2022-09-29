@@ -1,0 +1,111 @@
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 57864307 total points, and tested 1040502 boundary points for viability, consisting of 20402 unique quaternions. Encountered 96024 unviable points.
+Cluster successfully found!
+Returned cluster of size 48012
+Initial vectors are v_remove = [0.635287  0.635287  -0.439115] and v_opp = [0.632403  0.632482  -0.447251]
+Performing another iteration in get_cbf. Current theta = 0.052360
+Performing another iteration in get_cbf. Current theta = 0.069813
+Performing another iteration in get_cbf. Current theta = 0.087266
+Performing another iteration in get_cbf. Current theta = 0.104720
+Performing another iteration in get_cbf. Current theta = 0.122173
+Performing another iteration in get_cbf. Current theta = 0.139626
+Performing another iteration in get_cbf. Current theta = 0.157080
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.174533
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.191986
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.209440
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.226893
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.244346
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.261799
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.279253
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.296706
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.314159
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.331613
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.349066
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.366519
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.383972
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.401426
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.418879
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.436332
+Checking 2 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 64192157 total points, and tested 7494909 boundary points for viability, consisting of 146959 unique quaternions. Encountered 0 unviable points.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 64110907 total points, and tested 7412034 boundary points for viability, consisting of 145334 unique quaternions. Encountered 0 unviable points.
+Added constraint #3 at v = [0.707815  0.704394  -0.053169] and theta = 0.436332
+1/3:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 57693757 total points, and tested 453696 boundary points for viability, consisting of 16991 unique quaternions. Encountered 48012 unviable points.
+Cluster successfully found!
+Returned cluster of size 48012
+Initial vectors are v_remove = [0.634615  0.634610  0.441061] and v_opp = [0.632347  0.632543  0.447244]
+Performing another iteration in get_cbf. Current theta = 0.052360
+Performing another iteration in get_cbf. Current theta = 0.069813
+Performing another iteration in get_cbf. Current theta = 0.087266
+Performing another iteration in get_cbf. Current theta = 0.104720
+Performing another iteration in get_cbf. Current theta = 0.122173
+Performing another iteration in get_cbf. Current theta = 0.139626
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.157080
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.174533
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.191986
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.209440
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.226893
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.244346
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.261799
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  Performing another iteration in get_cbf. Current theta = 0.279253
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  Performing another iteration in get_cbf. Current theta = 0.296706
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  Performing another iteration in get_cbf. Current theta = 0.314159
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  Performing another iteration in get_cbf. Current theta = 0.331613
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  Performing another iteration in get_cbf. Current theta = 0.349066
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  Performing another iteration in get_cbf. Current theta = 0.366519
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.383972
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.401426
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  Performing another iteration in get_cbf. Current theta = 0.418879
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  Performing another iteration in get_cbf. Current theta = 0.436332
+Checking 3 combinations for possible future conflicts.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 64271307 total points, and tested 7575642 boundary points for viability, consisting of 148542 unique quaternions. Encountered 0 unviable points.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 64012907 total points, and tested 7312074 boundary points for viability, consisting of 143374 unique quaternions. Encountered 0 unviable points.
+1/1:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 63051657 total points, and tested 6331599 boundary points for viability, consisting of 124149 unique quaternions. Encountered 0 unviable points.
+Added constraint #4 at v = [0.711703  0.700292  0.055401] and theta = 0.436332
+1/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+2/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+3/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+4/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+5/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+6/6:  0%  5%  10%  15%  20%  25%  30%  35%  40%  45%  50%  55%  60%  65%  70%  75%  80%  85%  90%  95%  100%
+Generated 349971242 total points, and tested 7127913 boundary points for viability, consisting of 178120 unique quaternions. Encountered 0 unviable points.
+Total Program Run Time was 1052.203125 seconds.
