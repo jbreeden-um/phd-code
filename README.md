@@ -4,7 +4,7 @@ This repository contains code for papers published as part of my PhD research.
 
 ## Projects
 
-Breeden, J., and Panagou, D. (2023). "[Computation of Viability Domains Under Multiple Control Barrier Functions with Input Constraints](2023/ACC%20Multiple%20Control%20Barrier%20Functions)", Submitted to <em>2023 American Control Conference</em>. Under Review.
+Breeden, J., and Panagou, D. (2023). "[Compositions of Multiple Control Barrier Functions Under Input Constraints](2023/ACC%20Multiple%20Control%20Barrier%20Functions)", Submitted to <em>2023 American Control Conference</em>. Under Review.
 
 Breeden, J., and Panagou, D. (2022). "[Predictive Control Barrier Functions for Online Safety Critical Control](2022/CDC%20Predictive%20CBFs)", To be presented at <em>2022 61st IEEE Conference on Decision and Control</em>.
 

@@ -1,4 +1,4 @@
-# Computation of Viability Domains Under Multiple Control Barrier Functions with Input Constraints
+# Compositions of Multiple Control Barrier Functions Under Input Constraints
 
 ### Overview
 
