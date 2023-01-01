@@ -1,12 +1,12 @@
 %% Regular Cases
+data_nom = load('Results/Nominal.mat');
+data_com = load('Results/Comparison.mat');
+
 try
-    s = get_s(0);
-    s(1);
+    cross(get_s(0),[1;0;0]);
 catch
     ComputeConstants;
 end
-data_nom = load('Results/Nominal.mat');
-data_com = load('Results/Comparison.mat');
 
 color1 = [0; 0.6; 0];
 color2 = [0.2; 0.2; 1];
@@ -45,38 +45,41 @@ f3 = plot(az3, el3, '--', 'LineWidth', 3, 'Color', color1);
 f4 = plot(az4, el4, '--', 'LineWidth', 3, 'Color', color2);
 azs = atan2d(s_target(2), s_target(1));
 els = asind(s_target(3));
-plot(azs, els, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 8);
-plot(az1(1), el1(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
+f5 = plot(azs, els, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 8);
+f6 = plot(az1(1), el1(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
 plot(az2(1), el2(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
 xlabel 'Azimuth in Inertial Frame (deg)'; ylabel 'Elevation in Inertial Frame (deg');
-legend([f1,f2,f3,f4],{'ZohCBF b_1','ZohCBF b_2','Comparison b_1','Comparison b_2'},'FontSize',12);
+legend([f1,f2,f3,f4,f6,f5],{'ZohCBF b_1','ZohCBF b_2','Comparison b_1','Comparison b_2','Initial b_1 and b_2','Target for b_1'},'FontSize',12);
 axis equal;
 axis([-180, 180, -90, 90]);
 set(gcf, 'Position', [200 900 750 400]);
-set(gca, 'FontSize', 12);
+set(gca, 'FontSize', 14);
 
 figure(2); clf;
 f1 = plot(t, data_nom.H(1,:), 'Color', color1, 'LineWidth', 1); hold on;
 f2 = plot(t, data_nom.H(2,:), 'Color', color2, 'LineWidth', 1);
 f3 = plot(t, data_com.H(1,:), '--', 'Color', color1, 'LineWidth', 1);
 f4 = plot(t, data_com.H(2,:), '--', 'Color', color2, 'LineWidth', 1);
-xlabel 'Time (s)'; ylabel 'H';
+xlabel 'Time (s)'; ylabel 'h_{ }';
 % legend([f1,f2,f3,f4],{'CBF H_1','CBF H_2','L.F. H_1','L.F. H_2'},...
 %     'Orientation','horizontal','Position',[0.145 0.29 0.75 0.15])
-legend([f1,f2],{'H_1','H_2'},'Orientation','horizontal','Location','SouthEast')
+legend([f1,f2],{'h_1','h_2'},'Orientation','horizontal','Location','SouthEast')
 % axis([0 350 -2 0]);
 axis([0 350 -1.4 0]);
-set(gcf, 'Position', [390 600 560 200]);
-set(gca, 'FontSize', 12);
+set(gcf, 'Position', [390 600 560 180]); %, 'Renderer', 'Painters');
+ax2 = gca;
+set(ax2, 'FontSize', 12);
 
 figure(3); clf;
 f1 = plot(t, data_nom.h(3,:)*1e3, 'Color', color_w, 'LineWidth', 1); hold on;
 f2 = plot(t, data_com.h(3,:)*1e3, '--', 'Color', color_w, 'LineWidth', 1);
-xlabel 'Time (s)'; ylabel 'h_3 (mJ)';
+xlabel 'Time (s)'; ylabel '\eta_3 (mJ)';
 legend([f1,f2],{'ZohCBF','Comparison'});
 axis([0 350 -0.06 0]);
-set(gcf, 'Position', [390 300 560 200]);
-set(gca, 'FontSize', 12);
+set(gcf, 'Position', [390 300 560 180]); %, 'Renderer', 'Painters');
+ax3 = gca;
+set(ax3, 'FontSize', 12);
+set(ax2, 'Position', ax3.Position);
 
 for i=1:4
 figure(3+i); clf;
@@ -92,9 +95,9 @@ set(gca, 'FontSize', 12);
 end
 
 if 0
-    figure(1); print -depsc AzEl.eps;
-    figure(2); print -depsc ConstraintQ.eps;
-    figure(3); print -depsc ConstraintE.eps;
+    figure(1); print -depsc AzEl_legend.eps;
+    figure(2); print -depsc ConstraintQ_small.eps;
+    figure(3); print -depsc ConstraintE_small.eps;
     figure(4); print -depsc Control1.eps;
     figure(5); print -depsc Control2.eps;
     figure(6); print -depsc Control3.eps;

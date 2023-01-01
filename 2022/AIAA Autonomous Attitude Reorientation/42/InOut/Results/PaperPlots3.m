@@ -32,7 +32,7 @@ vectors = [-0.686011 -0.652338 -0.322247;
 svn = [-0.90463166857598032, -0.39102558525948933, -0.16953033911932042]'; % sun vector
 mvn = [-0.98433583203767128, 0.16302796725297231, 0.06711819172228313]'; % moon vector
 
-figure(1); clf;
+f1 = figure(1); clf;
 x1 = RotQ(instrument, qbn_zoh');
 x2 = RotQ(tracker, qbn_zoh');
 x3 = RotQ(instrument, qbn_nom');
@@ -50,42 +50,50 @@ el2 = asind(x2(3,:));
 el3 = asind(x3(3,:));
 el4 = asind(x4(3,:));
 
+region_axes = axes(f1, 'FontSize', 14);
 [c1, c2, c3] = PlotCone(svn, deg2rad(45));
 indices = abs([c1(:), c2(:), c3(:)]*svn - cosd(45)) < 1e-5;
 azc = atan2d(c2(indices), c1(indices)); azc(azc < 0) = azc(azc<0) + 360;
 elc = asind(c3(indices));
-fill(azc,elc,color_t','EdgeAlpha',0); hold on;
+region1 = fill(azc,elc,color_t','EdgeAlpha',0); hold on;
 
 [c1, c2, c3] = PlotCone(mvn, deg2rad(30));
 indices = abs([c1(:), c2(:), c3(:)]*mvn - cosd(30)) < 1e-5;
 azc = atan2d(c2(indices), c1(indices));
 azc(azc < 0) = azc(azc<0) + 360;
 elc = asind(c3(indices));
-fill(azc,elc,color_m','EdgeAlpha',0); hold on;
+region2 = fill(azc,elc,color_m','EdgeAlpha',0); hold on;
 
 [c1, c2, c3] = PlotCone(svn, deg2rad(25));
 indices = abs([c1(:), c2(:), c3(:)]*svn - cosd(25)) < 1e-5;
 azc = atan2d(c2(indices), c1(indices));
 azc(azc < 0) = azc(azc<0) + 360;
 elc = asind(c3(indices));
-fill(azc,elc,color_i','EdgeAlpha',0); hold on;
+region3 = fill(azc,elc,color_i','EdgeAlpha',0); hold on;
 
-f1 = plot(az1, el1, 'LineWidth', 3, 'Color', color1);
+line_axes = copyobj(region_axes, f1);
+delete(get(line_axes, 'Children'));
+f1 = plot(az1, el1, 'LineWidth', 3, 'Color', color1); hold on;
 f2 = plot(az2, el2, 'LineWidth', 3, 'Color', color2);
 f3 = plot(az3, el3, '--', 'LineWidth', 3, 'Color', color1);
 f4 = plot(az4, el4, '--', 'LineWidth', 3, 'Color', color2);
 azs = atan2d(vectors(:,2), vectors(:,1)); azs(azs < 0) = azs(azs<0) + 360;
 els = asind(vectors(:,3));
-plot(azs, els, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 8);
+f5 = plot(azs, els, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 8);
 plot(az1(1), el1(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
 plot(az2(1), el2(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
-xlabel 'Azimuth in Inertial Frame (deg)'; ylabel 'Elevation in Inertial Frame (deg');
-legend([f1,f2,f3,f4],{'ZohCBF b_1','ZohCBF b_2','Nominal b_1','Nominal b_2'},...
-    'FontSize',11,'Position',[0.593 0.669 0.20 0.264]);
-axis equal;
-axis([0, 360, -90, 90]);
+xlabel 'Azimuth in Inertial Frame (deg)'; ylabel 'Elevation in Inertial Frame (deg)';
+legend(line_axes,[f1,f2,f3,f4],{'ZohCBF b_1','ZohCBF b_2','Nominal b_1','Nominal b_2'},...
+    'FontSize',11,'Position',[0.593 0.669 0.20 0.264]); %,'Color','none');
+legend(region_axes,[region3,region1,region2,f5],{'b_1 Sun Keep-out','b_2 Sun Keep-out','b_2 Moon Keep-out','Targets for b_1'},...
+    'FontSize',11,'Position',[0.131 0.634 0.229 0.249],'Color','none');
 set(gcf, 'Position', [200 900 750 400]);
-set(gca, 'FontSize', 12);
+
+axis(region_axes, 'equal');
+axis(region_axes, [0, 360, -90, 90]);
+axis(line_axes, 'equal');
+axis(line_axes, [0, 360, -90, 90]);
+set(line_axes, 'Color', 'none');
 
 figure(2); clf;
 mu = 0.00167;
@@ -101,21 +109,24 @@ f3 = plot(time, H_zoh(:,3), 'Color', color3, 'LineWidth', 1);
 f4 = plot(time, H_nom(:,1), '--', 'Color', color1, 'LineWidth', 1); hold on;
 f5 = plot(time, H_nom(:,2), '--', 'Color', color2, 'LineWidth', 1);
 f6 = plot(time, H_nom(:,3), '--', 'Color', color3, 'LineWidth', 1);
-xlabel 'Time (s)'; ylabel 'H';
-legend([f1,f2,f3],{'H_{instr-sun}','H_{track-sun}','H_{track-moon}'},...
-    'Orientation','horizontal','Position',[0.322,0.24,0.55,0.1475]);
-axis([0 2100 -3 0.5]);
-set(gcf, 'Position', [390 550 560 250]);
-set(gca, 'FontSize', 12);
+xlabel 'Time (s)'; ylabel 'h_{ }';
+legend([f1,f2,f3],{'h_{instr-sun}','h_{track-sun}','h_{track-moon}'},...
+    'Orientation','horizontal','Position',[0.322,0.245,0.55,0.1475]);
+axis([0 2100 -2.7 0.4]);
+set(gcf, 'Position', [390 550 560 220]);
+ax2 = gca;
+set(ax2, 'FontSize', 12);
 
 figure(3); clf;
 f1 = plot(time, Safety_zoh(:,7)*1e3, 'Color', color_w, 'LineWidth', 1); hold on;
 f2 = plot(time, Safety_nom(:,7)*1e3, '--', 'Color', color_w, 'LineWidth', 1);
-xlabel 'Time (s)'; ylabel 'h_4 (mJ)';
+xlabel 'Time (s)'; ylabel '\eta_4 (mJ)';
 legend([f1,f2],{'ZohCBF','Nominal'},'Position',[0.725,0.27,0.16,0.21]);
 axis([0 2100 -0.2 0.18]);
 set(gcf, 'Position', [390 250 560 200]);
-set(gca, 'FontSize', 12);
+ax3 = gca;
+set(ax3, 'FontSize', 12);
+set(ax2, 'Position', [ax3.Position(1), ax2.Position(2), ax3.Position(3), ax2.Position(4)]);
 
 for i=1:4
 figure(3+i); clf;
@@ -131,8 +142,8 @@ set(gca, 'FontSize', 12);
 end
 
 if 0
-    figure(1); print -depsc AzEl_42.eps;
-    figure(2); print -depsc ConstraintQ_42.eps;
+    figure(1); print -depsc AzEl_42_legend.eps;
+    figure(2); print -depsc ConstraintQ_42_small.eps;
     figure(3); print -depsc ConstraintE_42.eps;
     figure(4); print -depsc Control1_42.eps;
     figure(5); print -depsc Control2_42.eps;
