@@ -1,4 +1,4 @@
-function [grad, hess] = ComparisonDerivatives(q, qr, x1, y1, y2, ctheta1, ctheta2, k)
+function [grad, hess] = ComparisonDerivativesBarrier(q, qr, x1, y1, y2, ctheta1, ctheta2, k)
 q0 = q(1); q1 = q(2); q2 = q(3); q3 = q(4);
 qr0 = qr(1); qr1 = qr(2); qr2 = qr(3); qr3 = q(4);
 x11 = x1(1); x12 = x1(2); x13 = x1(3);

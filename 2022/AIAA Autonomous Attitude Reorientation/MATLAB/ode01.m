@@ -30,8 +30,8 @@ catch
 end
 
 %% First Function Call
-CalculateU(t, y);
-out_arr(1) = outdata;
+CalculateU(t-dt, y); % This is to compile everything
+out_arr(1) = outdata; % This is to make out_arr the same length as t_arr
 
 %% Waitbar
 SimDur = span(end);

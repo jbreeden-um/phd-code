@@ -35,7 +35,7 @@ xp = reshape(translated(1,:), s);
 yp = reshape(translated(2,:), s);
 zp = reshape(translated(3,:), s);
 if nargin==2
-    if nargout==1
+    if nargout==1 || nargout==0
         h = surf(xp,yp,zp,'FaceAlpha',Alpha,'EdgeAlpha',0,'FaceColor',[1;0;0]);
         varargout{1} = h;
         % axis equal;

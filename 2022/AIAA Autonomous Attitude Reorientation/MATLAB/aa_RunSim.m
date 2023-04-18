@@ -2,19 +2,26 @@
 % such a way that it will plot the intermediary results.
 
 %% Clean Up Workspace
-clear CalculateU UpdateX ConstraintE ConstraintQ PlotOutputs ComparisonController
+clear CalculateU UpdateX ConstraintE ConstraintQ PlotOutputs
+clear ComparisonControllerBarrier ComparisonControllerSMC ComparisonControllerMPC mpc_func3 mpc_solver mpc_PE
 F = findall(0,'type','figure','tag','TMWWaitbar');
 delete(F);
 
+%% Gain Presets
+% The following presents gains used in the ComparisonControllerBarrier
+zoh_violation_demo = 0; % 0 or 1
+nonconvex_demo = 1; % 0 or 1
+
+%% Other Choices
+global control_law use_cbf
+control_law = 2; % 1 = PD, 2 = Logarithmic Barriers, 3 = SMC, 4 = MPC
+use_cbf = 1; % whether or not we use the CBF and the QCQP
+SimDur = 1100;
+
 %% Set up Variables
 % The following is used by the controller
-global s_target use_lyapunov use_cbf k_compare
+global s_target k_compare
 s_target = [0; -1/sqrt(2); -1/sqrt(2)];
-SimDur = 350;
-use_cbf = 1; % whether or not we use the CBF and the QCQP
-use_lyapunov = 0; % whether the nominal control law is shortest path or based on Lee/Mesbahi's paper
-nonconvex_demo = 1; % 0 or 1
-constraint_demo = 0; % 0 or 1
 
 constants = load('parameters.mat');
 % The following constants are used by the functions h, hdot, phi
@@ -27,13 +34,13 @@ wheel_axis = constants.wheel_axis;
 Jw = constants.Jw;
 ctheta = constants.ctheta;
 
-if constraint_demo
+if zoh_violation_demo
     % A demo where the constraints get violated because the controller is
     % way too aggressive for the ZOH discretization used. This case is
     % obviously contrived and would be tuned away, but illustrates how a
     % check on the control input can be useful.
     use_cbf = 0;
-    use_lyapunov = 1;
+    control_law = 2;
     k_compare = 1;
 elseif nonconvex_demo
     % A demo where the shortest-path control law will fail because of the
@@ -71,9 +78,9 @@ opts.dt = constants.dt;
 opts.RelTol = inf;
 opts.debug = 1;
 opts.compare = 1;
-tic
+timer = tic;
 [t, x, data] = ode01([0 SimDur], x0, opts);
-toc
+toc(timer)
 
 %% Plot Results
 figure(2); clf;
@@ -129,6 +136,15 @@ hold on; title 'Control Input';
 plot(t, ones(size(t))*constants.wheel_limit*[-1, 1], 'r--');
 xlabel 'Time (s)'; ylabel 'u';
 legend u_1 u_2 u_3 u_4 Location SouthEast
+
+figure(7); clf;
+compute = [data.compute];
+plot(t(2:end),compute(2:end));
+title 'Computation Time'; xlabel 'Time (s)'; ylabel 'Cost (s)';
+[~,i_end] = max(converged); if i_end==1, i_end=length(t); end
+i_end = i_end+500; if i_end>length(t), i_end=length(t); end
+mean_compute = mean(compute(3:i_end))
+max_compute = max(compute(3:i_end))
 
 %% Clean up
 F = findall(0,'type','figure','tag','TMWWaitbar');

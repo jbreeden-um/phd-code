@@ -4,5 +4,6 @@ classdef SavedData
         hdot;
         H;
         u;
+        compute;
     end
 end

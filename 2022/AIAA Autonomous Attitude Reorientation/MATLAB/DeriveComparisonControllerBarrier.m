@@ -1,5 +1,5 @@
 % This file derives the formulas for the gradients and hessians required to implement the
-% control law being used for comparison.
+% control law being used for comparison in ComparisonControllerBarrier
 
 syms q0 q1 q2 q3 real
 syms qr0 qr1 qr2 qr3 real
@@ -7,8 +7,6 @@ q = [q0; q1; q2; q3];
 qr = [qr0; qr1; qr2; qr3];
 term1 = QxQ(QConj(qr), q) - [1;0;0;0];
 term1 = term1.'*term1;
-
-% grad = jacobian(term1, q)
 
 syms k
 syms x11 x12 x13 real
