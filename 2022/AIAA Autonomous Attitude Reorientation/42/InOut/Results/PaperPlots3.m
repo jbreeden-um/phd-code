@@ -82,12 +82,12 @@ els = asind(vectors(:,3));
 f5 = plot(azs, els, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 8);
 plot(az1(1), el1(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
 plot(az2(1), el2(1), 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 8);
-xlabel 'Azimuth in Inertial Frame (deg)'; ylabel 'Elevation in Inertial Frame (deg)';
-legend(line_axes,[f1,f2,f3,f4],{'ZohCBF b_1','ZohCBF b_2','Nominal b_1','Nominal b_2'},...
+xlabel('Azimuth in Inertial Frame (deg)','FontSize',15); ylabel('Elevation in Inertial Frame (deg)', 'FontSize', 15);
+legend(line_axes,[f1,f2,f3,f4],{'ZohCBF b_1','ZohCBF b_2','PD b_1','PD b_2'},...
     'FontSize',11,'Position',[0.593 0.669 0.20 0.264]); %,'Color','none');
 legend(region_axes,[region3,region1,region2,f5],{'b_1 Sun Keep-out','b_2 Sun Keep-out','b_2 Moon Keep-out','Targets for b_1'},...
     'FontSize',11,'Position',[0.131 0.634 0.229 0.249],'Color','none');
-set(gcf, 'Position', [200 900 750 400]);
+set(gcf, 'Position', [200 400 750 400]);
 
 axis(region_axes, 'equal');
 axis(region_axes, [0, 360, -90, 90]);
@@ -121,7 +121,7 @@ figure(3); clf;
 f1 = plot(time, Safety_zoh(:,7)*1e3, 'Color', color_w, 'LineWidth', 1); hold on;
 f2 = plot(time, Safety_nom(:,7)*1e3, '--', 'Color', color_w, 'LineWidth', 1);
 xlabel 'Time (s)'; ylabel '\eta_4 (mJ)';
-legend([f1,f2],{'ZohCBF','Nominal'},'Position',[0.725,0.27,0.16,0.21]);
+legend([f1,f2],{'ZohCBF','PD'},'Position',[0.725,0.27,0.16,0.21]);
 axis([0 2100 -0.2 0.18]);
 set(gcf, 'Position', [390 250 560 200]);
 ax3 = gca;
@@ -135,7 +135,7 @@ plot(time, Wheels_nom(:,(i-1)*3+2)*1e3, '--', 'Color', color_u(i,:), 'LineWidth'
 plot([0 2100], [1 1]*wheel_limit*1e3, 'k--');
 plot([0 2100], -[1 1]*wheel_limit*1e3, 'k--');
 xlabel 'Time (s)'; ylabel(['u_' num2str(i) ' (mNm)']);
-legend ZohCBF Nominal Location North;
+legend ZohCBF PD Location North;
 axis([0 2100 -0.75 0.75]);
 set(gcf, 'Position', [1000, 1100-300*(i-1), 650, 200]);
 set(gca, 'FontSize', 12);
