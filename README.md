@@ -14,7 +14,7 @@ Breeden, J., and Panagou, D. (2022). "[Guaranteed Safe Spacecraft Docking with C
 
 Breeden, J., and Panagou, D. (2022). "[Autonomous Spacecraft Attitude Reorientation Using Robust Sampled-Data Control Barrier Functions](2022/AIAA%20Autonomous%20Attitude%20Reorientation)". Under Review.
 
-Breeden, J., and Panagou, D. (2021). "[Robust Control Barrier Functions under Input Constraints and Disturbances for Satellite Trajectories](2021/Automatica%20Robust%20CBFs%20for%20Satellite%20Trajectories)". Under Review. 
+Breeden, J., and Panagou, D. (2021). "[Robust Control Barrier Functions under Input Constraints and Disturbances for Satellite Trajectories](2021/Automatica%20Robust%20CBFs%20for%20Satellite%20Trajectories)". To appear in *Automatica*. 
 
 Breeden, J., Garg, K., and Panagou, D. (2022). "[Control Barrier Functions in Sampled-Data Systems](2021/L-CSS%20CBFs%20for%20Sampled%20Data%20Systems)", in *IEEE Control Systems Letters*, vol. 6, pp. 367-372, 2022, doi: 10.1109/LCSYS.2021.3076127. [https://ieeexplore.ieee.org/document/9417092](https://ieeexplore.ieee.org/document/9417092)
 
