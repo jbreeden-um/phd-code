@@ -4,15 +4,8 @@ if nargin==4
     % every call to fmincon. If psi_v becomes nonsmooth, then fmincon gets upset.
     x0 = x;
 end
-global A_sys P psi_v_Nmax
-persistent PA PAA e_max
-if isempty(e_max)
-    A = A_sys;
-    PA = P*A + A'*P;
-    PAA = PA*A + A'*PA;
-    PAAA = PAA*A + A'*PAA;
-    e_max = max(eig(PAAA));
-end
+global P psi_v_Nmax
+
 dt = tau - t;
 if dt < 0
     error('psi_v is only valid for future times');
@@ -20,36 +13,40 @@ end
 if sum(isnan(x))
     error('x is NaN in psi_v');
 end
-mag = local_bound(x0);
-v3 = e_max*mag^2;
-margin = v3*dt^2/2;
+
+mu = 398600e9;
+Vd = @(x1, xc) (xc(3) - x1(3))*(P(1,1)*(xc(1) - x1(1)) + P(1,2)*(xc(2) - x1(2)) + P(1,3)*(xc(3) - x1(3)) + P(1,4)*(xc(4) - x1(4))) - (xc(2) - x1(2))*(P(2,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(2,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,2)*(xc(3) - x1(3)) - P(2,2)*(xc(4) - x1(4))) - (xc(3) - x1(3))*(P(3,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(3,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,3)*(xc(3) - x1(3)) - P(2,3)*(xc(4) - x1(4))) - (xc(4) - x1(4))*(P(3,4)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(4,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,4)*(xc(3) - x1(3)) - P(2,4)*(xc(4) - x1(4))) - ((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(1,3)*(xc(1) - x1(1)) + P(2,3)*(xc(2) - x1(2)) + P(3,3)*(xc(3) - x1(3)) + P(3,4)*(xc(4) - x1(4))) - ((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(1,4)*(xc(1) - x1(1)) + P(2,4)*(xc(2) - x1(2)) + P(3,4)*(xc(3) - x1(3)) + P(4,4)*(xc(4) - x1(4))) - (xc(1) - x1(1))*(P(1,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(1,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,1)*(xc(3) - x1(3)) - P(1,2)*(xc(4) - x1(4))) + (xc(4) - x1(4))*(P(1,2)*(xc(1) - x1(1)) + P(2,2)*(xc(2) - x1(2)) + P(2,3)*(xc(3) - x1(3)) + P(2,4)*(xc(4) - x1(4)));
+Vdd = @(x1, xc) 2*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(3,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(3,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,3)*(xc(3) - x1(3)) - P(2,3)*(xc(4) - x1(4))) - ((mu*xc(4))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(4))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(2)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(2)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2)))*(P(1,4)*(xc(1) - x1(1)) + P(2,4)*(xc(2) - x1(2)) + P(3,4)*(xc(3) - x1(3)) + P(4,4)*(xc(4) - x1(4))) - ((mu*xc(3))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(3))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(1)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(1)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2)))*(P(1,3)*(xc(1) - x1(1)) + P(2,3)*(xc(2) - x1(2)) + P(3,3)*(xc(3) - x1(3)) + P(3,4)*(xc(4) - x1(4))) + 2*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(3,4)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(4,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,4)*(xc(3) - x1(3)) - P(2,4)*(xc(4) - x1(4))) - 2*(xc(3) - x1(3))*(P(1,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(1,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,1)*(xc(3) - x1(3)) - P(1,2)*(xc(4) - x1(4))) - 2*(xc(4) - x1(4))*(P(2,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(2,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)) - P(1,2)*(xc(3) - x1(3)) - P(2,2)*(xc(4) - x1(4))) - ((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(1,1)*(xc(1) - x1(1)) + P(1,2)*(xc(2) - x1(2)) + P(1,3)*(xc(3) - x1(3)) + P(1,4)*(xc(4) - x1(4))) - ((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))*(P(1,2)*(xc(1) - x1(1)) + P(2,2)*(xc(2) - x1(2)) + P(2,3)*(xc(3) - x1(3)) + P(2,4)*(xc(4) - x1(4))) - (xc(1) - x1(1))*(P(1,3)*((mu*xc(3))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(3))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(1)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(1)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(1,4)*((mu*xc(4))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(4))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(2)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(2)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(1,1)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(1,2)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))) - (xc(2) - x1(2))*(P(2,3)*((mu*xc(3))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(3))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(1)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(1)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(2,4)*((mu*xc(4))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(4))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(2)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(2)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(1,2)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(2,2)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))) - (xc(3) - x1(3))*(P(3,3)*((mu*xc(3))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(3))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(1)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(1)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(3,4)*((mu*xc(4))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(4))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(2)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(2)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(1,3)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(2,3)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2))) - (xc(4) - x1(4))*(P(3,4)*((mu*xc(3))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(3))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(1)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(1)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(4,4)*((mu*xc(4))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(4))/(x1(1)^2 + x1(2)^2)^(3/2) - (3*mu*xc(2)*(2*xc(1)*xc(3) + 2*xc(2)*xc(4)))/(2*(xc(1)^2 + xc(2)^2)^(5/2)) + (3*mu*x1(2)*(2*x1(1)*x1(3) + 2*x1(2)*x1(4)))/(2*(x1(1)^2 + x1(2)^2)^(5/2))) + P(1,4)*((mu*xc(1))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(1))/(x1(1)^2 + x1(2)^2)^(3/2)) + P(2,4)*((mu*xc(2))/(xc(1)^2 + xc(2)^2)^(3/2) - (mu*x1(2))/(x1(1)^2 + x1(2)^2)^(3/2)));
+Vddd_max = 4.103e-6*compute_V(t,x0);
+margin = Vddd_max*dt^2/2;
+
 if margin < tolerance
     % If the margin is sufficiently small, use the explicit formula
-    v = x'*PA*x + max(0, x'*PAA*x)*dt + margin;
+    v = Vd(x, get_center(t)) + max(0, Vdd(x, get_center(t)))*dt + margin;
 else
     % If the margin would be too big, use one-step MPC
-    ts = sqrt(tolerance/v3*2); % the discretization margin required to achieve the desired level of margin
+    ts = sqrt(tolerance/Vddd_max*2); % the discretization margin required to achieve the desired level of margin
     Ns = ceil(dt/ts);
     
     % Because safety is prioritized over convergence and we require the controller to run
     % sufficiently fast, we enforce a maximum number of MPC predictions for the
     % stabilizing part of the control law.
+    % disp(['Desired steps = ' num2str(Ns), ', Allowed steps = ' num2str(psi_v_Nmax)]);
     Ns = min(Ns, psi_v_Nmax);
     
     tspan = linspace(t, tau, Ns+1);
     
     % The actual margin that would result from the number of samples we applied
     delta = tspan(2) - tspan(1);
-    margin = v3*delta^2/2;
+    margin = Vddd_max*delta^2/2;
     
     % Relaxation of convergence tolerance (part of the term d in the controller)
     margin = min(margin, tolerance);
     
-    A = A_sys;
-    [~, x_sim] = ode45(@(t,x) A*x, tspan, x);
+    [~, x_sim] = ode45(@two_body, tspan, x);
     Vdot = zeros(Ns,1);
     for i=1:Ns
-        Vdot(i) = x_sim(i,:)*PA*x_sim(i,:)' + max(0, x'*PAA*x)*delta;
+        Vdot(i) = Vd(x_sim(i,:),get_center(tspan(i))) + max(0, Vdd(x_sim(i,:),get_center(tspan(i))))*delta;
     end
     if nargin==4
         v = max(Vdot) + margin;
@@ -58,7 +55,3 @@ else
     end
 end
 end
-
-% Note that we can potentially reduce margin by evaluating v3 exactly along the
-% trajectory rather than assuming the worst possible upper bound, but that is not
-% considered in this file.

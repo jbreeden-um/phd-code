@@ -1,6 +1,32 @@
+% Main simulation file. See the "Parameters that change" section to experiment with
+% different outcomes. Note that this simulation makes four assumptions that are not
+% necessarily true, and if the simulation fails, it is generally because of one of these
+% assumptions:
+
+% Assumption 1: The obstacles follow realistic orbital dynamics. This is not true.
+% Obstacles 3 and 4 are programmed to follow slightly non-real dynamics so that they stay
+% within the working area. Thus, the controller could skim the edges of these obstacles.
+
+% Assumption 2: The Lyapunov function is nonincreasing. At every control instant, the
+% margins are computed only for points in the current sublevel set of V. If the controller
+% decides that it needs to elevate to a higher sublevel set, then these margins become
+% innacurrate and could result in loss of safety. This is the primary failure mode as
+% dT_control is increased.
+
+% Assumption 3: The optimization is always feasible. As stated in the paper, anytime there
+% are multiple CBFs, feasibility may not hold. In general, for small dT_control, the
+% "sphere of influence" of each obstacle is small, so the optimization is always feasible.
+% For large dT_control, the "sphere of influence" of each obstacle increases, and if the
+% spheres overlap, then the optimization may become infeasible.
+
+% Assumption 4: The optimizer will always find an accurate solution to the optimization
+% problem. This is rarely true in nonconvex optimization. The CalculateU file will output
+% warnings when the control solution is likely innaccurate.
+
 %%
 F = findall(0,'type','figure','tag','TMWWaitbar');
 delete(F);
+clear F;
 
 %% Parameters we can set
 global psi_v_min_rate psi_v_rhs_max psi_v_tol_dt psi_v_tol_dT gamma_V psi_v_Nmax
@@ -13,7 +39,7 @@ gamma_V = 0.00002; % =(1-\gamma_2) in the paper
 
 global use_psi_h_star psi_h_nh
 use_psi_h_star = 1; % 0 or 1, whether to use the vector psi_h_star or the scalar psi_h 
-psi_h_nh = 10;
+psi_h_nh = 10; % should be at least 2 or the code might break
 
 global use_dock_constraint
 use_dock_constraint = 1; % 0 or 1, determines whether h5 is enforced or not
@@ -21,28 +47,24 @@ use_dock_constraint = 1; % 0 or 1, determines whether h5 is enforced or not
 global use_moving_obstacles
 use_moving_obstacles = 0; % the simulation works well with time-varying obstacles, but it is harder to visualize
 
+global robust_margin_checking
+robust_margin_checking = 1; % whether we assume that V is strictly decreasing or make it a parameter of the optimization
+% When use_psi_h_star=1, then setting this variable to true allows us to relax Assumption 2, 
+% but it can make fmincon upset, thus potentially violating Assumption 4 instead.
+
 %% Timings
 dt_flow = 3;
 N_per_flow = 3;
 dT_control = 15;
 N_per_control = dT_control/dt_flow*N_per_flow;
 
-%% Pre-Defined Cases
-% Every plot shown in the paper can be derived solely by varying the following number
-sim_case = 6; % only simulations 2, 3, 6, and 7 are included in the paper to avoid clutter
-
-if sim_case > 0 && sim_case <= 8
-    use_psi_h_star = bitget(sim_case, 1);
-    use_dock_constraint = bitget(sim_case, 2);
-    if bitget(sim_case, 3)
-        dT_control = 30;
-    else
-        dT_control = 15;
-    end
-end
+%% Parameters that change between the simulations included in the paper
+use_psi_h_star = 1;
+dT_control = 600;
+N_per_control = dT_control/dt_flow*N_per_flow;
 
 %% Setup
-global P A_sys
+global P
 mu = 398600e9;
 Re = 6378e3;
 alt = 600e3;
@@ -56,7 +78,8 @@ R = eye(2)*100;
 Q = eye(4);
 [~, P, ~] = lqr(A_sys,B_sys,Q,R);
 
-x0 = [-7.4; -10e3; 0; -1];
+x0_hcw = [-7.4; -10e3; 0; -1];
+x0 = x0_hcw + get_center(0) + [0; 0; [eye(2), zeros(2,1)]*cross([0;0;n], [x0_hcw(1:2); 0])];
 sim_dur = 5000;
 
 %% Run the simulation
@@ -115,19 +138,20 @@ mean_compute = mean(compute(~isnan(compute)))
 i_end = i_end-1;
 if i_end < 1, i_end = length(t); end
 
+x_lin = convert_to_hcw(t,x);
 figure(1); clf;
-plot(t, x(1:2,:)); ylabel 'Position';
+plot(t, x_lin(1:2,:)); ylabel 'Position';
 
 figure(2); clf
-plot(t, x(3:4,:)); ylabel 'Velocity';
+plot(t, x_lin(3:4,:)); ylabel 'Velocity';
 
 V = zeros(1,N);
-for i=1:N, V(i) = x(:,i)'*P*x(:,i); end
+for i=1:N, V(i) = compute_V(t(i), x(:,i)); end
 figure(3); clf;
-plot(t, V); ylabel 'Lyapunov Function';
+plot(t, sqrt(V)); ylabel 'Sqrt Lyapunov Function';
 hold on;
-plot(t([jumps(2:end),jumps(1)]), V([jumps(2:end),jumps(1)]), 'ro');
-plot(t(jumps), V(jumps), 'bo');
+plot(t([jumps(2:end),jumps(1)]), sqrt(V([jumps(2:end),jumps(1)])), 'ro');
+plot(t(jumps), sqrt(V(jumps)), 'bo');
 legend 'Flow' 'Before Jump' 'After Jump';
 [~,i] = max(V<=P(1,1));
 if i==1, t_crit = Inf; V_end = V(i_end), else, t_crit = t(i), end
@@ -137,19 +161,22 @@ plot(t(jumps), V([jumps(2:end),jumps(1)])./V(jumps), 'bx')
 ylabel 'Lyapunov Contraction Ratio';
 
 figure(5); clf;
-plot(t(1:length(u)), u, 'o'); ylabel 'Control Input';
+[~,theta] = get_center(t(1:length(u)));
+u_lin = [u(1,:).*cos(theta) + u(2,:).*sin(theta); u(2,:).*cos(theta) - u(1,:).*sin(theta)];
+plot(t(1:length(u)), u_lin, 'o'); ylabel 'Control Input';
 
 figure(6); clf;
 theta = linspace(0, 2*pi, 100);
 cx = cos(theta);
 cy = sin(theta);
 rho = 1;
-obs = obstacle_location(1,0); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r'); hold on;
-obs = obstacle_location(2,0); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
-obs = obstacle_location(3,0); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
-obs = obstacle_location(4,0); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
+xc = get_center(0);
+obs = obstacle_location(1,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r'); hold on;
+obs = obstacle_location(2,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
+obs = obstacle_location(3,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
+obs = obstacle_location(4,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
 xlabel 'x_1'; ylabel 'x_2';
-plot(x(1,:)/1e3, x(2,:)/1e3, 'b', 'LineWidth', 2)
+plot(x_lin(1,:)/1e3, x_lin(2,:)/1e3, 'b', 'LineWidth', 2)
 
 if new_sim
 h = zeros(6, length(t))*NaN;
