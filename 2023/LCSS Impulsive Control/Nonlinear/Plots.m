@@ -117,4 +117,48 @@ legend([p1a p2a p3a p4], ...
     '$$\psi_h^*$$, 18 sec, Flows', 'Jumps'}, ...
     'FontSize', 13, 'Location', 'NorthEast', 'interpreter', 'latex');
 
+%%
+compute_lin = [sim_lin15.mean_compute;
+             sim_lin30.mean_compute;
+             sim_lin45.mean_compute;
+             sim_lin60.mean_compute]
+         
+compute_nl = [sim_nl15.mean_compute;
+            sim_nl30.mean_compute;
+            sim_nl45.mean_compute;
+            sim_nl60.mean_compute;
+            sim_nl90.mean_compute;
+            sim_nl120.mean_compute;
+            sim_nl180.mean_compute;
+            sim_nl240.mean_compute;
+            sim_nl300.mean_compute;
+            sim_nl360.mean_compute;
+            sim_nl420.mean_compute;
+            sim_nl480.mean_compute;
+            sim_nl540.mean_compute]
+        
+compute_select = [sim_lin45.mean_compute; sim_nl45.mean_compute; sim_nl180.mean_compute]
+
+%%
+data = {sim_lin15, sim_lin30, sim_lin45, sim_lin60, sim_nl15, sim_nl30, sim_nl45, sim_nl60, ...
+    sim_nl90, sim_nl120, sim_nl180, sim_nl240, sim_nl300, sim_nl360, sim_nl420, sim_nl480, sim_nl540};
+t_crit = zeros(1, length(data));
+modified_cost = zeros(1, length(data));
+tol = 6.9e4;
+for i=1:length(data)
+    [~,index] = max(data{i}.V<=tol);
+    if index==1
+        t_crit(i) = Inf;
+        costs = vecnorm(data{i}.u);
+        modified_cost(i) = Inf; %sum(costs(~isnan(costs)));
+    else
+        t_crit(i) = data{i}.t(index);
+        costs = vecnorm(data{i}.u(:,1:index));
+        modified_cost(i) = sum(costs(~isnan(costs)));
+    end
+end
+disp('t_crit = ');
+fprintf('   %d\n',t_crit);
+disp('modified_cost = ');
+for i=1:length(data), k = floor(log10(modified_cost(i))); fprintf([blanks(5-k), ' %.2f\n'],modified_cost(i)); end
 end
