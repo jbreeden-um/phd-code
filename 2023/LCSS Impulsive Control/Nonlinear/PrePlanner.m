@@ -8,14 +8,14 @@ A_sys = [0,     0, 1,    0;
          0,     0, 0,    1;
          3*n^2, 0, 0,    2*n;
          0,     0, -2*n, 0];
-dT = 300;
+dT = 45;
 Phi = expm(A_sys*dT);
 B_sys = [0, 0; 0, 0; 1, 0; 0, 1];
 x0_hcw = [-7.4; -10e3; 0; -1];
 xf_hcw = [0;0;0;0];
 x0 = x0_hcw + get_center(0) + [0; 0; [eye(2), zeros(2,1)]*cross([0;0;n], [x0_hcw(1:2); 0])];
 
-duration = ceil(3000/dT)*dT;
+duration = ceil(2200/dT)*dT;
 dim_x = 4;
 dim_u = 2;
 Ns = duration/dT;
@@ -70,33 +70,47 @@ b = zeros(Ns+1,1);
 for i=1:(Ns+1), A(i,dim_x*(i-1)+2) = 1; end
 sol_q = quadprog(Q, zeros(N,1), A, b, Aeq, beq);
 
-x = reshape(sol_q(1:((Ns+1)*dim_x)), [dim_x, Ns+1]);
-plot(x(1,:)/1e3, x(2,:)/1e3, 'm', 'LineWidth', 2)
+x_p = reshape(sol_q(1:((Ns+1)*dim_x)), [dim_x, Ns+1]);
+plot(x_p(1,:)/1e3, x_p(2,:)/1e3, 'm', 'LineWidth', 2)
 
 figure(12); clf;
 plot(dT*(0:1:(Ns-1)), sol_q((Ns+1)*dim_x+(1:dim_u:Ns*dim_u)), 'o'); hold on;
 plot(dT*(0:1:(Ns-1)), sol_q((Ns+1)*dim_x+(2:dim_u:Ns*dim_u)), 'o');
 xlabel('Time (s)'); ylabel('Control (m/s');
 
-
-u = reshape(sol_q(iu1:iu2), [2 Ns]);
-y = zeros(dim_x,Ns+1);
-y(:,1) = x0;
+u0 = reshape(sol_q(iu1:iu2), [2 Ns]);
+t = zeros(1,dT*Ns+200)*NaN;
+x = zeros(dim_x,length(t))*NaN;
+u = zeros(dim_u,length(t))*NaN;
+V = zeros(1,length(t))*NaN;
+jumps = zeros(1,length(t),'logical');
+t(1) = 0;
+x(:,1) = x0;
+V(1) = compute_V(t(1),x(:,1));
 for i=1:Ns
     [~,theta] = get_center(dT*(i-1));
     R = [cos(theta), -sin(theta); sin(theta), cos(theta)];
-    x_new = UpdateX_Jump(y(:,i), R*u(:,i));
-    [~,z] = UpdateX_Flow(0,x_new,dT,3);
-    y(:,i+1) = z(:,end)';
+    j1 = (dT+1)*(i-1)+2;
+    j2 = (dT+1)*i+1;
+    jumps(j1) = 1;
+    u(:,j1) = R*u0(:,i);
+    x_new = UpdateX_Jump(x(:,j1-1), u(:,j1));
+    [t_s,x_s] = UpdateX_Flow(t(j1-1),x_new,dT,dT+1);
+    t(j1:j2) = t_s;
+    x(:,j1:j2) = x_s;
+    for j=j1:j2
+        V(j) = compute_V(t(j),x(:,j));
+    end
 end
 
 q_cost = sol_q'*Q*sol_q/2
 real_cost = sum(vecnorm(reshape(sol_q(iu1:iu2), [2, Ns])))
-final_V = compute_V(duration,y(:,end))
+final_V = compute_V(duration,x(:,j2))
 
 figure(15); clf;
-y_hcw = convert_to_hcw(0:dT:duration, y);
-plot(y_hcw(1,:)/1e3, y_hcw(2,:)/1e3);
+x_lin = convert_to_hcw(t, x);
+plot(x_lin(1,:)/1e3, x_lin(2,:)/1e3);
+save('Runs/planner45', 'x', 't', 'u', 'V', 'x_lin', 'jumps');
 return
 
 % Conclusion: Whether to use this or not really comes back to the

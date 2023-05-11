@@ -16,6 +16,7 @@ sim_nl360 = load('Runs/nonlin360.mat');
 sim_nl420 = load('Runs/nonlin420.mat');
 sim_nl480 = load('Runs/nonlin480.mat');
 sim_nl540 = load('Runs/nonlin540.mat');
+sim_p45 = load('Runs/planner45.mat');
 
 figure(11); clf;
 theta = linspace(0, 2*pi, 100);
@@ -33,10 +34,11 @@ xlabel 'x_1 (km)'; ylabel 'x_2 (km)';
 color1 = [0; 0.7; 0];
 color2 = [0.2; 0.2; 1];
 color3 = [0.9; 0; 0.9];
+color4 = [0.4; 0.4; 0.4];
 % p1 = plot(sim_lin15.x_lin(1,:)/1e3, sim_lin15.x_lin(2,:)/1e3, 'b', 'LineWidth', 2)
 p2 = plot(sim_lin30.x_lin(1,:)/1e3, sim_lin30.x_lin(2,:)/1e3, '-', 'LineWidth', 2, 'Color', color1);
 p3 = plot(sim_lin45.x_lin(1,:)/1e3, sim_lin45.x_lin(2,:)/1e3, '--', 'LineWidth', 2, 'Color', color1);
-p4 = plot(sim_lin60.x_lin(1,:)/1e3, sim_lin60.x_lin(2,:)/1e3, ':', 'LineWidth', 3, 'Color', color1);
+p5 = plot(sim_lin60.x_lin(1,:)/1e3, sim_lin60.x_lin(2,:)/1e3, ':', 'LineWidth', 3, 'Color', color1);
 % p5 = plot(sim_nl15.x_lin(1,:)/1e3, sim_nl15.x_lin(2,:)/1e3, 'g', 'LineWidth', 2)
 p6 = plot(sim_nl30.x_lin(1,:)/1e3, sim_nl30.x_lin(2,:)/1e3, '-', 'LineWidth', 2, 'Color', color2);
 p7 = plot(sim_nl45.x_lin(1,:)/1e3, sim_nl45.x_lin(2,:)/1e3, '--', 'LineWidth', 2, 'Color', color2);
@@ -50,17 +52,18 @@ p13 = plot(sim_nl300.x_lin(1,:)/1e3, sim_nl300.x_lin(2,:)/1e3, '--', 'LineWidth'
 p15 = plot(sim_nl420.x_lin(1,:)/1e3, sim_nl420.x_lin(2,:)/1e3, ':', 'LineWidth', 3, 'Color', color3);
 % p16 = plot(sim_nl480.x_lin(1,:)/1e3, sim_nl480.x_lin(2,:)/1e3, 'g', 'LineWidth', 2)
 % p17 = plot(sim_nl540.x_lin(1,:)/1e3, sim_nl540.x_lin(2,:)/1e3, 'g', 'LineWidth', 2)
+p18 = plot(sim_p45.x_lin(1,:)/1e3, sim_p45.x_lin(2,:)/1e3, '--', 'LineWidth', 2, 'Color', color4);
 
 plot(sim_lin15.x0(1)/1e3, sim_lin15.x0(2)/1e3, 'ko', 'MarkerFaceColor', 'k');
 plot(0, 0, 'ko', 'MarkerFaceColor', 'k');
 
 ax = gca;
-legend(ax,[p2 p3 p4], {'$$\psi_h$$, 30 sec', '$$\psi_h$$, 45 sec', '$$\psi_h$$, 60 sec'}, ...
-    'FontSize', 13, 'Location', 'SouthEast', 'interpreter', 'latex');
+legend(ax,[p2 p3 p5 p18], {'$$\psi_h$$, 30 sec', '$$\psi_h$$, 45 sec', '$$\psi_h$$, 60 sec', 'Plan, 45 sec'}, ...
+    'FontSize', 13, 'Location', 'SouthEast', 'interpreter', 'latex', 'Position', [0.575257687635491 0.131746031746032 0.253313740935938 0.211190472103301]);
 ax2 = axes('position',get(gca,'position'),'visible','off');
 l2 = legend(ax2,[p6 p7 p8 p11 p13 p15], {'$$\psi_h^*$$, 30 sec', '$$\psi_h^*$$, 45 sec', '$$\psi_h^*$$, 60 sec', ...
     '$$\psi_h^*$$, 180 sec', '$$\psi_h^*$$, 300 sec', '$$\psi_h^*$$, 420 sec'}, ...
-    'FontSize', 13, 'Location', 'SouthWest', 'interpreter', 'latex');
+    'FontSize', 13, 'Location', 'SouthWest', 'interpreter', 'latex', 'Color', 'none');
 
 set(l2, 'Position', [0.205357142857143 0.129365079365079 0.240648319691257 0.312619041488284]);
 axis(ax,'equal');
@@ -75,26 +78,32 @@ text(0.1, 0.55, '$$x_{target}$$', 'interpreter', 'latex', 'FontSize', 14)
 %%
 figure(12); clf;
 i_end = 2000;
-p1 = plot(sim_lin45.t(1:i_end)/60, sim_lin45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0.7;0], 'Color', color1); hold on;
-p2 = plot(sim_nl45.t(1:i_end)/60, sim_nl45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0;1], 'Color', color2);
-p3 = plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [1;0;1], 'Color', color3);
+plot(sim_p45.t(1:i_end)/60, sim_p45.u(1,1:i_end), 'x', 'MarkerSize', 4, 'LineWidth', 1, 'Color', color4); hold on;
+p1 = plot(sim_lin45.t(1:i_end)/60, sim_lin45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color1, 'Color', color1); hold on;
+p2 = plot(sim_nl45.t(1:i_end)/60, sim_nl45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color2, 'Color', color2);
+plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color3, 'Color', color3);
 set(gca, 'Xlim', [0 30], 'YLim', [-12 30]);
 set(gcf, 'Position', [2600 900 560 160]);
-l = legend([p1 p2 p3], {'$$\psi_h$$, 45 sec', '$$\psi_h^*$$, 45 sec', '$$\psi_h^*$$, 180 sec'}, ...
-    'FontSize', 13, 'Location', 'NorthEast', 'interpreter', 'latex');
+l = legend([p1 p2], {'$$\psi_h$$, 45 sec', '$$\psi_h^*$$, 45 sec'}, ...
+    'FontSize', 12, 'Location', 'NorthEast', 'interpreter', 'latex');
 xlabel 'Time (minutes)';
 ylabel 'u_1 (m/s)';
-set(l, 'Position', [0.664113585070648 0.526666674713293 0.240648319691257 0.421249991953373]);
+set(l, 'Position', [0.677405256599883 0.617291670242945 0.214856648162022 0.268124996423721]);
+% set(l, 'Position', [0.664113585070648 0.526666674713293 0.240648319691257 0.421249991953373]);
 
 
 figure(13); clf;
+p4 = plot(sim_p45.t(1:i_end)/60, sim_p45.u(2,1:i_end), 'x', 'MarkerSize', 4, 'LineWidth', 1, 'Color', color4); hold on;
 plot(sim_lin45.t(1:i_end)/60, sim_lin45.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0.7;0], 'Color', color1); hold on;
 plot(sim_nl45.t(1:i_end)/60, sim_nl45.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0;1], 'Color', color2);
-plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [1;0;1], 'Color', color3);
+p3 = plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [1;0;1], 'Color', color3);
 set(gca, 'Xlim', [0 30], 'YLim', [-30 15]);
 set(gcf, 'Position', [2600 600 560 160]);
+l = legend([p3 p4], {'$$\psi_h^*$$, 180 sec', 'Plan, 45 sec'}, ...
+    'FontSize', 12, 'Location', 'SouthEast', 'interpreter', 'latex');
 xlabel 'Time (minutes)';
 ylabel 'u_2 (m/s)';
+set(l, 'Position', [0.649642626366452 0.308333333333333 0.240833564109739 0.268124996423721]);
 
 %%
 figure(14); clf;
@@ -107,15 +116,19 @@ p2b = plot(sim.t(sim.jumps)/60, sim.V(sim.jumps), '.', 'Color', color2, 'MarkerS
 sim = sim_nl180;
 p3a = plot(sim.t/60, sim.V, 'Color', color3); hold on;
 p3b = plot(sim.t(sim.jumps)/60, sim.V(sim.jumps), '.', 'Color',  color3, 'MarkerSize', 10);
-p4 = plot(-1, 1, 'k.', 'MarkerSize', 10);
+sim = sim_p45;
+p4a = plot(sim.t/60, sim.V, 'Color', color4); hold on;
+p4b = plot(sim.t(sim.jumps)/60, sim.V(sim.jumps), '.', 'Color',  color4, 'MarkerSize', 10);
+p5 = plot(-1, 1, 'k.', 'MarkerSize', 10);
 set(gcf, 'Position', [2600 300 560 180]);
 set(gca, 'Xlim', [0 30]);
 xlabel 'Time (minutes)';
 ylabel 'V';
-legend([p1a p2a p3a p4], ...
+l = legend([p1a p2a p3a p4a p5], ...
     {'$$\psi_h$$, 45 sec, Flows', '$$\psi_h^*$$, 45 sec, Flows', ...
-    '$$\psi_h^*$$, 18 sec, Flows', 'Jumps'}, ...
-    'FontSize', 13, 'Location', 'NorthEast', 'interpreter', 'latex');
+    '$$\psi_h^*$$, 18 sec, Flows', 'Plan, 45 sec, Flows', 'Jumps'}, ...
+    'FontSize', 12, 'Location', 'NorthEast', 'interpreter', 'latex');
+set(l, 'Position', [0.585686504203057 0.392592600539878 0.330278144246991 0.566666658719380]);
 
 %%
 compute_lin = [sim_lin15.mean_compute;
