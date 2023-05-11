@@ -1,0 +1,3 @@
+### Simulation Runs
+
+In this folder, the designation "linear" means using `\psi_h` to compute safety, as that function results in affine safety constraints on the controller optimization. The designation "nonlinear" means using `\psi_h^*` to compute safety, as that function results in nonlinear safety constraints on the controller optimization. Note that the `\psi_v^*` constraints are nonlinear in both cases, so the controller is a nonlinear program regardless.
