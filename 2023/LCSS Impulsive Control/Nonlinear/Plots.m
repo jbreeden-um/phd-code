@@ -29,7 +29,7 @@ obs = obstacle_location(2,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho,
 obs = obstacle_location(3,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
 obs = obstacle_location(4,0)-xc(1:2); fill(obs(1)/1e3+cx*rho, obs(2)/1e3+cy*rho, 'r');
 fill([-10 -10 10 10 -10], [6 0 0 6 6], 'r');
-xlabel 'x_1 (km)'; ylabel 'x_2 (km)';
+xlabel '\Delta r_{rad} (km)'; ylabel '\Delta r_{phase} (km)';
 
 color1 = [0; 0.7; 0];
 color2 = [0.2; 0.2; 1];
@@ -82,7 +82,7 @@ plot(sim_p45.t(1:i_end)/60, sim_p45.u(1,1:i_end), 'x', 'MarkerSize', 4, 'LineWid
 p1 = plot(sim_lin45.t(1:i_end)/60, sim_lin45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color1, 'Color', color1); hold on;
 p2 = plot(sim_nl45.t(1:i_end)/60, sim_nl45.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color2, 'Color', color2);
 plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(1,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', color3, 'Color', color3);
-set(gca, 'Xlim', [0 30], 'YLim', [-12 30]);
+set(gca, 'Xlim', [0 30], 'YLim', [-30 45]);
 set(gcf, 'Position', [2600 900 560 160]);
 l = legend([p1 p2], {'$$\psi_h$$, 45 sec', '$$\psi_h^*$$, 45 sec'}, ...
     'FontSize', 12, 'Location', 'NorthEast', 'interpreter', 'latex');
@@ -97,13 +97,13 @@ p4 = plot(sim_p45.t(1:i_end)/60, sim_p45.u(2,1:i_end), 'x', 'MarkerSize', 4, 'Li
 plot(sim_lin45.t(1:i_end)/60, sim_lin45.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0.7;0], 'Color', color1); hold on;
 plot(sim_nl45.t(1:i_end)/60, sim_nl45.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [0;0;1], 'Color', color2);
 p3 = plot(sim_nl180.t(1:i_end)/60, sim_nl180.u(2,1:i_end), 's', 'MarkerSize', 4, 'MarkerFaceColor', [1;0;1], 'Color', color3);
-set(gca, 'Xlim', [0 30], 'YLim', [-30 15]);
+set(gca, 'Xlim', [0 30], 'YLim', [-22 22], 'YTick', -20:10:20);
 set(gcf, 'Position', [2600 600 560 160]);
 l = legend([p3 p4], {'$$\psi_h^*$$, 180 sec', 'Plan, 45 sec'}, ...
     'FontSize', 12, 'Location', 'SouthEast', 'interpreter', 'latex');
 xlabel 'Time (minutes)';
 ylabel 'u_2 (m/s)';
-set(l, 'Position', [0.649642626366452 0.308333333333333 0.240833564109739 0.268124996423721]);
+set(l, 'Position', [0.655488227197453 0.629791670242945 0.240833564109739 0.268124996423721]);
 
 %%
 figure(14); clf;
