@@ -8,7 +8,7 @@ This repository contains code for papers published as part of my PhD research.
 
 Breeden, J., and Panagou, D. (2023). "[Safety-Critical Control for Systems with Impulsive Actuators and Dwell Time Constraints](2023/LCSS%20Impulsive%20Control)", in *IEEE Control Systems Letters*, vol. 7, pp. 2119-2124, doi: 10.1109/LCSYS.2023.3285141. [https://ieeexplore.ieee.org/document/10148055](https://ieeexplore.ieee.org/document/10148055)
 
-Breeden, J., and Panagou, D. (2023). "[Compositions of Multiple Control Barrier Functions Under Input Constraints](2023/ACC%20Multiple%20Control%20Barrier%20Functions)", in *2023 American Control Conference*, pp. 3688-3695.
+Breeden, J., and Panagou, D. (2023). "[Compositions of Multiple Control Barrier Functions Under Input Constraints](2023/ACC%20Multiple%20Control%20Barrier%20Functions)", in *2023 American Control Conference*, pp. 3688-3695, doi: 10.23919/ACC55779.2023.10156625. [https://ieeexplore.ieee.org/document/10156625](https://ieeexplore.ieee.org/document/10156625)
 
 #### 2022
 
