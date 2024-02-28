@@ -1,4 +1,5 @@
 function PaperPlots
+%%
 sim1 = load('data/sim_data120');
 sim2 = load('data/sim_data240');
 sim3 = load('data/sim_data360');
@@ -17,7 +18,6 @@ obs = convert_to_vis(t_obs, obstacle_location(4,t_obs)); fill((obs(1)+cx*rho)/sc
 obs = convert_to_vis(t_obs, obstacle_location(5,t_obs)); fill((obs(1)+cx*rho)/scale, (obs(2)+cy*rho)/scale, 'r');
 obs = convert_to_vis(t_obs, obstacle_location(6,t_obs)); fill((obs(1)+cx*rho)/scale, (obs(2)+cy*rho)/scale, 'r');
 fill([-30 30 30 -30 -30], [0 0 10 10 0], 'r');
-xlabel 'x_1 (km)'; ylabel 'x_2 (km)';
 
 xhat1a = sim1.xhat_lin(1:2,:) + sim1.rhohat(1,:);
 xhat1b = sim1.xhat_lin(1:2,:) - sim1.rhohat(1,:);
@@ -33,12 +33,15 @@ p1 = plot(sim1.x_lin(1,:)/scale, sim1.x_lin(2,:)/scale, 'b', 'LineWidth', 2);
 p2 = plot(sim2.x_lin(1,:)/scale, sim2.x_lin(2,:)/scale, 'b--', 'LineWidth', 2);
 p3 = plot(sim3.x_lin(1,:)/scale, sim3.x_lin(2,:)/scale, 'b:', 'LineWidth', 2);
 
-legend([p1 p2 p3], {'120 s', '240 s', '360 s'}, 'FontSize', 13, 'Location', 'SouthEast');
+legend([p1 p2 p3], {'120 s', '240 s', '360 s'}, 'FontSize', 20, 'Location', 'SouthEast');
 
 axis equal;
 axis([-20 20 -31 2]);
 set(gcf, 'Position', [50 550 560 420]);
+set(gca, 'FontSize', 15, 'XTick', -20:5:20);
+xlabel('x_1 (km)','FontSize',18); ylabel('x_2 (km)','FontSize',18);
 
+%%
 hhat_center = zeros(7, length(sim3.t))*NaN;
 for i=1:sim3.i_end
     [~,~,~,hhat_center(1,i)] = CBF_obs(sim3.t(i),sim3.xhat(:,i),sim3.TM,[0;0],[],1,'post');
@@ -71,6 +74,6 @@ for i=1:7
 end
 axis([0 5000 -35 0]);
 xlabel 'Time (seconds)'; ylabel 'h_i (km)';
-set(gcf, 'Position', [50 250 600 170]);
+set(gcf, 'Position', [50 250 600 165]);
 
 end

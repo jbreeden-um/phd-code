@@ -9,12 +9,13 @@ clear F;
 sim_dur = 24*3600*10;
 [x0, oe] = get_center(0);
 x0(5) = x0(5) + 1;
-dT_measurement = 6*3600;
+% dT_measurement = 8.18*3600;
+dT_measurement = 11.4*3600;
 dt = 60;
 
 global wg_rate wc_max
 wg_rate = 0.02;
-wc_max = 9.2e-6; % 1367 W/m2 * 2 m2 / 3e8 m/s
+wc_max = 4.56e-7; % 1367 W/m2 * 2 m2 / 3e8 m/s / 20 kg
 
 %% Simulate
 N = sim_dur/dt + 120;

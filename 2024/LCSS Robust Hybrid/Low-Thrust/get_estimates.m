@@ -3,8 +3,8 @@ persistent generator
 if t==0
     generator = RandStream('mt19937ar','Seed',0);
 end
-rho_r = 10;
-rho_v = 0.04;
+rho_r = 5;
+rho_v = 0.005;
 dr = generator.randn(3,1);
 dv = generator.randn(3,1);
 if norm(dr) > 1, dr = dr / norm(dr); end
